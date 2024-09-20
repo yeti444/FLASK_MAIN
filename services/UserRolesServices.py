@@ -1,4 +1,4 @@
-from repository.UserRolesRepository import get_all_UserRoles, get_one_UserRoles, update_UserRoles, create_UserRoles, delete_ResourceTypes
+from repository.UserRolesRepository import get_all_UserRoles, get_one_UserRoles, update_UserRoles, create_UserRoles, delete_UserRoles
 
 def get_all_UserRoles_service():
     return get_all_UserRoles()
@@ -13,4 +13,4 @@ def update_UserRoles_service(roleId, roleName):
     return update_UserRoles(roleId, roleName)
 
 def delete_UserRoles_service(roleId):
-    return delete_ResourceTypes(roleId)
+    return delete_UserRoles(roleId)

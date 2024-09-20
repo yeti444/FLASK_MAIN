@@ -44,7 +44,7 @@ def update_UserRoles(roleId, roleName):
     cur.close()
     conn.close()
     
-def delete_ResourceTypes(roleId):
+def delete_UserRoles(roleId):
     conn = db_conn()
     cur = conn.cursor()
     cur.execute('''delete from userroles where roleId = {0} ;'''.format(roleId))
