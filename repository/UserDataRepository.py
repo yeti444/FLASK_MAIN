@@ -39,7 +39,7 @@ def create_UserData(email, firstname, lastname, password, roleId):
 def update_UserData(email, firstname, lastname, password, roleId, userId):
     conn = db_conn()
     cur = conn.cursor()
-    cur.execute('''UPDATE userdata SET email = '{0}', firstname = '{1}', lastname = '{2}', password = '{3}', roleid = '{4}' WHERE userid = '{5}' ;'''.format(email, firstname, lastname, password, roleId, userId))
+    cur.execute('''UPDATE userdata SET email = '{0}', firstname = '{1}', lastname = '{2}', password = '{3}', roleid = '{4}' WHERE userid = {5} ;'''.format(email, firstname, lastname, password, roleId, userId))
     conn.commit()
     cur.close()
     conn.close()

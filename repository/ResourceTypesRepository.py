@@ -39,7 +39,7 @@ def create_ResourceTypes(typeName):
 def update_ResourceTypes(typeId, typeName):
     conn = db_conn()
     cur = conn.cursor()
-    cur.execute('''UPDATE resourcetypes SET typename = '{0}' WHERE typeid = '{1}' ;'''.format(typeName, typeId))
+    cur.execute('''UPDATE resourcetypes SET typename = '{0}' WHERE typeid = {1} ;'''.format(typeName, typeId))
     conn.commit()
     cur.close()
     conn.close()

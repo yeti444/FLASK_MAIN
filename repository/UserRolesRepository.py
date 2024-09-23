@@ -39,7 +39,7 @@ def create_UserRoles(roleName):
 def update_UserRoles(roleId, roleName):
     conn = db_conn()
     cur = conn.cursor()
-    cur.execute('''UPDATE userroles SET roleName = '{0}' WHERE roleId = '{1}' ;'''.format(roleName, roleId))
+    cur.execute('''UPDATE userroles SET roleName = '{0}' WHERE roleId = {1} ;'''.format(roleName, roleId))
     conn.commit()
     cur.close()
     conn.close()

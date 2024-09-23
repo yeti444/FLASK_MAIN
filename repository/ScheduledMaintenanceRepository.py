@@ -39,7 +39,7 @@ def create_ScheduledMaintenance(userId, fromDate, duration):
 def update_ScheduledMaintenance(maintId, userId, fromDate, duration):
     conn = db_conn()
     cur = conn.cursor()
-    cur.execute('''UPDATE scheduledmaintenance SET userId = '{0}', fromDate = '{1}', duration = '{2}' WHERE maintId = '{3}';'''.format(userId, fromDate, duration, maintId))
+    cur.execute('''UPDATE scheduledmaintenance SET userId = '{0}', fromDate = '{1}', duration = '{2}' WHERE maintId = {3};'''.format(userId, fromDate, duration, maintId))
     conn.commit()
     cur.close()
     conn.close()

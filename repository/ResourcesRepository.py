@@ -39,7 +39,7 @@ def create_Resources(name, typeId, info):
 def update_Resources(resourceId, name, typeId, info):
     conn = db_conn()
     cur = conn.cursor()
-    cur.execute('''UPDATE resources SET name = '{0}', typeId = {1}, info = '{2}' WHERE resourceId = '{3}' ;'''.format(resourceId, name, typeId, info))
+    cur.execute('''UPDATE resources SET name = '{0}', typeId = {1}, info = '{2}' WHERE resourceId = {3} ;'''.format(resourceId, name, typeId, info))
     conn.commit()
     cur.close()
     conn.close()
