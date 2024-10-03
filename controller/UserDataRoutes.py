@@ -7,7 +7,8 @@ UserData_bp = Blueprint('UserData', __name__)
 def get_UserData():
     entries = get_all_UserData_service()
     UserData_list = [{'userId': entry.userId,'email': entry.email,'firstName': entry.firstName,'lastName': entry.lastName,'password': entry.password,'createDate': entry.createDate,'roleId': entry.roleId} for entry in entries]
-    return jsonify({'UserData': UserData_list})          
+    return jsonify({'UserData': UserData_list})   
+
 
 @UserData_bp.route('/api/UserData', methods=['POST'])
 def create_UserData():

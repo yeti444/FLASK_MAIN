@@ -1,12 +1,12 @@
 from flask import Flask
-from routes.ResourceTypesRoutes import ResourceTypes_bp
-from routes.UserRolesRoutes import UserRoles_bp
-from routes.UserDataRoutes import UserData_bp
-from routes.ResourcesRoutes import Resources_bp
-from routes.ScheduledWorkRoutes import ScheduledWork_bp
-from routes.ScheduledMaintenanceRoutes import ScheduledMaintenance_bp
-from routes.MaintanedResourcesRoutes import MaintanedResources_bp
-from routes.ScheduledResourcesRoutes import ScheduledResources_bp
+from controller.ResourceTypesRoutes import ResourceTypes_bp
+from controller.UserRolesRoutes import UserRoles_bp
+from controller.UserDataRoutes import UserData_bp
+from controller.ResourcesRoutes import Resources_bp
+from controller.ScheduledWorkRoutes import ScheduledWork_bp
+from controller.ScheduledMaintenanceRoutes import ScheduledMaintenance_bp
+from controller.MaintanedResourcesRoutes import MaintanedResources_bp
+from controller.ScheduledResourcesRoutes import ScheduledResources_bp
 
 app = Flask(__name__)
 app.register_blueprint(ResourceTypes_bp)
