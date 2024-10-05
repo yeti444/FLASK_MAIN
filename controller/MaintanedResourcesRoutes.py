@@ -20,7 +20,7 @@ def create_MaintanedResources():
     new_entry = create_MaintanedResources_service(maintId, resourceId)
     return jsonify({'message': 'entry added', 'maintId': maintId, 'resourceId': resourceId})    
 
-@MaintanedResources_bp.route('/api/MaintanedResources/<int:maintId>&<int:resourceId>', methods=['PUT'])
+@MaintanedResources_bp.route('/api/MaintanedResources/maintId=<int:maintId>&resourceId=<int:resourceId>', methods=['PUT'])
 def update_MaintanedResources(maintId, resourceId):
     data = request.get_json()
     maintId= data.get('maintId')
@@ -36,7 +36,7 @@ def update_MaintanedResources(maintId, resourceId):
     else:
         return jsonify({'error': 'MaintanedResources not found'}), 404
 
-@MaintanedResources_bp.route('/api/MaintanedResources/<int:maintId>&<int:resourceId>', methods=['DELETE'])
+@MaintanedResources_bp.route('/api/MaintanedResources/maintId=<int:maintId>&resourceId=<int:resourceId>', methods=['DELETE'])
 def delete_MaintanedResources(maintId, resourceId):
     existing_data = get_one_MaintanedResources_service(maintId, resourceId)
     if existing_data:

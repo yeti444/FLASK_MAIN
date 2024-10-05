@@ -5,7 +5,7 @@ ScheduledMaintenance_bp = Blueprint('ScheduledMaintenance', __name__)
 @ScheduledMaintenance_bp.route('/api/ScheduledMaintenance', methods=['GET'])
 def get_ScheduledMaintenance():
     entries = get_all_ScheduledMaintenance_service()
-    ScheduledMaintenance_list = [{'maintId': entry.maintId,'userId': entry.userId,'fromDate': entry.fromDate,'duration': entry.duration,'createDate': entry.createDate} for entry in entries]
+    ScheduledMaintenance_list = [{'maintId': entry.maintId,'userId': entry.userId,'fromDate': entry.fromDate,'duration': entry.duration,'createDate': entry.createDate, 'description': entry.description, 'maintenancetypeid': entry.maintenancetypeid} for entry in entries]
     return jsonify({'ScheduledMaintenance': ScheduledMaintenance_list})          
 
 @ScheduledMaintenance_bp.route('/api/ScheduledMaintenance', methods=['POST'])
@@ -14,10 +14,12 @@ def create_ScheduledMaintenance():
     userId= data.get('userId')
     fromDate= data.get('fromDate')
     duration= data.get('duration')
+    description= data.get('description')
+    maintenancetypeid= data.get('maintenancetypeid')
     
-    if not userId or not fromDate or not duration:
+    if not userId or not fromDate or not duration or not description or not maintenancetypeid:
         return jsonify({'error': 'missing input data'}), 400
-    new_entry = create_ScheduledMaintenance_service(userId, fromDate, duration)
+    new_entry = create_ScheduledMaintenance_service(userId, fromDate, duration, description, maintenancetypeid)
     return jsonify({'message': 'entry added', 'maintId': new_entry})    
 
 @ScheduledMaintenance_bp.route('/api/ScheduledMaintenance/<int:maintId>', methods=['PUT'])
@@ -26,12 +28,14 @@ def update_ScheduledMaintenance(maintId):
     userId= data.get('userId')
     fromDate= data.get('fromDate')
     duration= data.get('duration')
+    description= data.get('description')
+    maintenancetypeid= data.get('maintenancetypeid')
     
-    if not userId or not fromDate or not duration:
+    if not userId or not fromDate or not duration or not description or not maintenancetypeid:
         return jsonify({'error': 'missing input data'}), 400
     existing_userId = get_one_ScheduledMaintenance_service(maintId)
     if existing_userId:
-        update_ScheduledMaintenance_service(maintId, userId, fromDate, duration)
+        update_ScheduledMaintenance_service(maintId, userId, fromDate, duration, description, maintenancetypeid)
         return jsonify({'message': 'update succesfull', 'maintId': maintId})
     else:
         return jsonify({'error': 'ScheduledMaintenance not found'}), 404

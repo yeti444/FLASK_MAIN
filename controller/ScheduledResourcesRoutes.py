@@ -20,7 +20,7 @@ def create_ScheduledResources():
     new_entry = create_ScheduledResources_service(workId, resourceId)
     return jsonify({'message': 'entry added', 'workId': workId, 'resourceId': resourceId})    
 
-@ScheduledResources_bp.route('/api/ScheduledResources/<int:workId>&<int:resourceId>', methods=['PUT'])
+@ScheduledResources_bp.route('/api/ScheduledResources/workId=<int:workId>&resourceId=<int:resourceId>', methods=['PUT'])
 def update_ScheduledResources(workId, resourceId):
     data = request.get_json()
     workId= data.get('workId')
@@ -36,7 +36,7 @@ def update_ScheduledResources(workId, resourceId):
     else:
         return jsonify({'error': 'ScheduledResources not found'}), 404
 
-@ScheduledResources_bp.route('/api/ScheduledResources/<int:workId>&<int:resourceId>', methods=['DELETE'])
+@ScheduledResources_bp.route('/api/ScheduledResources/workId=<int:workId>&resourceId=<int:resourceId>', methods=['DELETE'])
 def delete_ScheduledResources(workId, resourceId):
     existing_data = get_one_ScheduledResources_service(workId, resourceId)
     if existing_data:
