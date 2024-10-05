@@ -1,13 +1,12 @@
-import psycopg2
+from db.db_conn import db_conn
 from models.ResourceTypes import ResourceTypes
 
-def db_conn():
-    return psycopg2.connect(database="resourceManagement", host="localhost", user="", password="lenin17", port="5432")
 
 def get_all_ResourceTypes():
     conn = db_conn()
     cur = conn.cursor()
-    cur.execute('''SELECT * FROM resourcetypes''')
+    query = "SELECT * FROM resourcetypes;"
+    cur.execute(query)
     data = cur.fetchall()
     cur.close()
     conn.close()
@@ -17,19 +16,21 @@ def get_all_ResourceTypes():
 def get_one_ResourceTypes(typeId):
     conn = db_conn()
     cur = conn.cursor()
-    cur.execute('''SELECT * FROM resourcetypes WHERE typeid = {0}'''.format(typeId))
-    ResourceTypes_entry = cur.fetchone()
+    query = "SELECT * FROM resourcetypes WHERE typeid = %s;"
+    cur.execute(query, (typeId,))
+    entry = cur.fetchone()
     cur.close()
     conn.close()
-    if ResourceTypes_entry:
-        return ResourceTypes(typeId=ResourceTypes_entry[0], typeName=ResourceTypes_entry[1])
+    if entry:
+        return ResourceTypes(typeId=entry[0], typeName=entry[1])
     else: 
         None
 
 def create_ResourceTypes(typeName):
     conn = db_conn()
     cur = conn.cursor()
-    cur.execute('''insert into resourcetypes (typename) values ('{0}') returning typeid;'''.format(typeName))
+    query = "insert into resourcetypes (typename) values (%s) returning typeid;"
+    cur.execute(query, (typeName,))
     new_ResourceTypes_typeId = cur.fetchone()[0]
     conn.commit()
     cur.close()
@@ -39,7 +40,8 @@ def create_ResourceTypes(typeName):
 def update_ResourceTypes(typeId, typeName):
     conn = db_conn()
     cur = conn.cursor()
-    cur.execute('''UPDATE resourcetypes SET typename = '{0}' WHERE typeid = {1} ;'''.format(typeName, typeId))
+    query = "UPDATE resourcetypes SET typename = %s WHERE typeid = %s;"
+    cur.execute(query, (typeName, typeId,))
     conn.commit()
     cur.close()
     conn.close()
@@ -47,7 +49,8 @@ def update_ResourceTypes(typeId, typeName):
 def delete_ResourceTypes(typeId):
     conn = db_conn()
     cur = conn.cursor()
-    cur.execute('''delete from resourcetypes where typeId = {0} ;'''.format(typeId))
+    query = "delete from resourcetypes where typeId = %s;"
+    cur.execute(query, (typeId,))
     conn.commit()
     cur.close()
     conn.close()

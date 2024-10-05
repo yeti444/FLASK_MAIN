@@ -1,13 +1,12 @@
-import psycopg2
+from db.db_conn import db_conn
 from models.MaintanedResources import MaintanedResources
 
-def db_conn():
-    return psycopg2.connect(database="resourceManagement", host="localhost", user="", password="lenin17", port="5432")
 
 def get_all_MaintanedResources():
     conn = db_conn()
     cur = conn.cursor()
-    cur.execute('''SELECT * FROM maintanedresources''')
+    query = "SELECT * FROM maintanedresources;"
+    cur.execute(query)
     data = cur.fetchall()
     cur.close()
     conn.close()
@@ -17,19 +16,21 @@ def get_all_MaintanedResources():
 def get_one_MaintanedResources(maintId, resourceId):
     conn = db_conn()
     cur = conn.cursor()
-    cur.execute('''SELECT * FROM maintanedresources WHERE maintId = {0} AND resourceId = {1}'''.format(maintId, resourceId))
-    MaintanedResources_entry = cur.fetchone()
+    query = "SELECT * FROM maintanedresources WHERE maintId = %s AND resourceId = %s;"
+    cur.execute(query, (maintId, resourceId,))
+    entry = cur.fetchone()
     cur.close()
     conn.close()
-    if MaintanedResources_entry:
-        return MaintanedResources(maintId = MaintanedResources_entry[0], resourceId = MaintanedResources_entry[1])
+    if entry:
+        return MaintanedResources(maintId = entry[0], resourceId = entry[1])
     else: 
         None
 
 def create_MaintanedResources(maintId, resourceId):
     conn = db_conn()
     cur = conn.cursor()
-    cur.execute('''insert into maintanedresources (maintId, resourceId) values ('{0}', '{1}');'''.format(maintId, resourceId))
+    query = "insert into maintanedresources (maintId, resourceId) values (%s, %s);"
+    cur.execute(query, (maintId, resourceId,))
     conn.commit()
     cur.close()
     conn.close()
@@ -37,7 +38,8 @@ def create_MaintanedResources(maintId, resourceId):
 def update_MaintanedResources(maintId, resourceId):
     conn = db_conn()
     cur = conn.cursor()
-    cur.execute('''UPDATE maintanedresources SET maintId = '{0}', resourceId = '{1}' WHERE maintId = {0} AND resourceId = {1};'''.format(maintId, resourceId))
+    query = "UPDATE maintanedresources SET maintId = %s, resourceId = %s WHERE maintId = %s AND resourceId = %s;"
+    cur.execute(query, (maintId, resourceId,))
     conn.commit()
     cur.close()
     conn.close()
@@ -45,7 +47,8 @@ def update_MaintanedResources(maintId, resourceId):
 def delete_MaintanedResources(maintId, resourceId):
     conn = db_conn()
     cur = conn.cursor()
-    cur.execute('''delete from maintanedresources WHERE workId = {0} AND resourceId = {1} ;'''.format(maintId, resourceId))
+    query = "delete from maintanedresources WHERE workId = %s AND resourceId = %s;"
+    cur.execute(query, (maintId, resourceId,))
     conn.commit()
     cur.close()
     conn.close()

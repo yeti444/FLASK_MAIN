@@ -1,13 +1,11 @@
-import psycopg2
+from db.db_conn import db_conn
 from models.UserRoles import UserRoles
-
-def db_conn():
-    return psycopg2.connect(database="resourceManagement", host="localhost", user="", password="lenin17", port="5432")
 
 def get_all_UserRoles():
     conn = db_conn()
     cur = conn.cursor()
-    cur.execute('''SELECT * FROM userroles''')
+    query = "SELECT * FROM userroles;"
+    cur.execute(query)
     data = cur.fetchall()
     cur.close()
     conn.close()
@@ -17,19 +15,21 @@ def get_all_UserRoles():
 def get_one_UserRoles(roleId):
     conn = db_conn()
     cur = conn.cursor()
-    cur.execute('''SELECT * FROM userroles WHERE roleId = {0}'''.format(roleId))
-    UserRoles_entry = cur.fetchone()
+    query = "SELECT * FROM userroles WHERE roleId = %s;"
+    cur.execute(query, (roleId,))
+    entry = cur.fetchone()
     cur.close()
     conn.close()
-    if UserRoles_entry:
-        return UserRoles(roleId=UserRoles_entry[0], roleName=UserRoles_entry[1])
+    if entry:
+        return UserRoles(roleId=entry[0], roleName=entry[1])
     else: 
         None
 
 def create_UserRoles(roleName):
     conn = db_conn()
     cur = conn.cursor()
-    cur.execute('''insert into userroles (roleName) values ('{0}') returning roleId;'''.format(roleName))
+    query = "insert into userroles (roleName) values (%s) returning roleId;"
+    cur.execute(query, (roleName,))
     new_UserRoles_roleId = cur.fetchone()[0]
     conn.commit()
     cur.close()
@@ -39,7 +39,8 @@ def create_UserRoles(roleName):
 def update_UserRoles(roleId, roleName):
     conn = db_conn()
     cur = conn.cursor()
-    cur.execute('''UPDATE userroles SET roleName = '{0}' WHERE roleId = {1} ;'''.format(roleName, roleId))
+    query = "UPDATE userroles SET roleName = %s WHERE roleId = %s;"
+    cur.execute(query, (roleName, roleId,))
     conn.commit()
     cur.close()
     conn.close()
@@ -47,7 +48,8 @@ def update_UserRoles(roleId, roleName):
 def delete_UserRoles(roleId):
     conn = db_conn()
     cur = conn.cursor()
-    cur.execute('''delete from userroles where roleId = {0} ;'''.format(roleId))
+    query = "delete from userroles where roleId = %s;"
+    cur.execute(query, (roleId,))
     conn.commit()
     cur.close()
     conn.close()
