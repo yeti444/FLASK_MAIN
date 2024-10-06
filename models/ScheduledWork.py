@@ -1,10 +1,10 @@
 class ScheduledWork:
     def __init__(self, workId, userId, fromDate, duration, createDate):
-        self.workId = workId
-        self.userId = userId
-        self.fromDate = fromDate
-        self.duration = duration
-        self.createDate = createDate
+        self._workId = workId
+        self._userId = userId
+        self._fromDate = fromDate
+        self._duration = duration
+        self._createDate = createDate
 
 
         

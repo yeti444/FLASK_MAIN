@@ -10,7 +10,7 @@ from controller.ScheduledResourcesRoutes import ScheduledResources_bp
 
 from controller.insertWorkRoutes import insertWork_bp
 from controller.insertMaintenanceRoutes import insertMaintenance_bp
-
+from controller.checkAvailabilityRoutes import checkAvailability_bp
 app = Flask(__name__)
 app.register_blueprint(ResourceTypes_bp)
 app.register_blueprint(UserRoles_bp)
@@ -23,6 +23,7 @@ app.register_blueprint(ScheduledResources_bp)
 
 app.register_blueprint(insertWork_bp)
 app.register_blueprint(insertMaintenance_bp)
+app.register_blueprint(checkAvailability_bp)
 
 if __name__ == '__main__':
     app.run(port=6000, debug=True)
