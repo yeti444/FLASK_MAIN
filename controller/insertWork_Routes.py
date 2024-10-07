@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from services.insertWorkServices import insertNewScheduledWork_service
+from services.insertWork_Services import insertNewScheduledWork_service
 
 insertWork_bp = Blueprint('inserWork', __name__)
 

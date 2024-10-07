@@ -1,30 +1,27 @@
 from flask import Flask
-from controller.ResourceTypesRoutes import ResourceTypes_bp
-from controller.UserRolesRoutes import UserRoles_bp
-from controller.UserDataRoutes import UserData_bp
-from controller.ResourcesRoutes import Resources_bp
-from controller.ScheduledWorkRoutes import ScheduledWork_bp
-from controller.ScheduledMaintenanceRoutes import ScheduledMaintenance_bp
-from controller.MaintanedResourcesRoutes import MaintanedResources_bp
-from controller.ScheduledResourcesRoutes import ScheduledResources_bp
+import importlib
 
-from controller.insertWorkRoutes import insertWork_bp
-from controller.insertMaintenanceRoutes import insertMaintenance_bp
-from controller.checkAvailabilityRoutes import checkAvailability_bp
+blueprint_modules = [
+    ('controller.ResourceTypes_Routes', ['ResourceTypes_bp']),
+    ('controller.UserRoles_Routes', ['UserRoles_bp']),
+    ('controller.UserData_Routes', ['UserData_bp']),
+    ('controller.Resources_Routes', ['Resources_bp']),
+    ('controller.ScheduledWork_Routes', ['ScheduledWork_bp']),
+    ('controller.ScheduledMaintenance_Routes', ['ScheduledMaintenance_bp']),
+    ('controller.MaintanedResources_Routes', ['MaintanedResources_bp']),
+    ('controller.ScheduledResources_Routes', ['ScheduledResources_bp']),
+    ('controller.insertWork_Routes', ['insertWork_bp']),
+    ('controller.insertMaintenance_Routes', ['insertMaintenance_bp']),
+    ('controller.checkAvailability_Routes', ['checkAvailability_bp']),
+]
+
 app = Flask(__name__)
-app.register_blueprint(ResourceTypes_bp)
-app.register_blueprint(UserRoles_bp)
-app.register_blueprint(UserData_bp)
-app.register_blueprint(Resources_bp)
-app.register_blueprint(ScheduledWork_bp)
-app.register_blueprint(ScheduledMaintenance_bp)
-app.register_blueprint(MaintanedResources_bp)
-app.register_blueprint(ScheduledResources_bp)
 
-app.register_blueprint(insertWork_bp)
-app.register_blueprint(insertMaintenance_bp)
-app.register_blueprint(checkAvailability_bp)
+for module_name, blueprint_names in blueprint_modules:
+    module = importlib.import_module(module_name)
+    for blueprint_name in blueprint_names:
+        blueprint = getattr(module, blueprint_name)
+        app.register_blueprint(blueprint)
 
 if __name__ == '__main__':
     app.run(port=6000, debug=True)
-    

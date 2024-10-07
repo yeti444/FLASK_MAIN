@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from services.UserRolesServices import get_all_UserRoles_service, get_one_UserRoles_service, create_UserRoles_service, update_UserRoles_service, delete_UserRoles_service
+from services.UserRoles_Services import get_all_UserRoles_service, get_one_UserRoles_service, create_UserRoles_service, update_UserRoles_service, delete_UserRoles_service
 
 UserRoles_bp = Blueprint('UserRoles', __name__)
 

@@ -1,4 +1,4 @@
-from repository.ResourceTypesRepository import get_all_ResourceTypes, get_one_ResourceTypes, create_ResourceTypes, update_ResourceTypes, delete_ResourceTypes
+from repository.ResourceTypes_Repository import get_all_ResourceTypes, get_one_ResourceTypes, create_ResourceTypes, update_ResourceTypes, delete_ResourceTypes
 
 def get_all_ResourceTypes_service():
     return get_all_ResourceTypes()

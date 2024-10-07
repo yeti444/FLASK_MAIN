@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from services.UserDataServices import get_all_UserData_service, get_one_UserData_service, create_UserData_service, update_UserData_service, delete_UserData_service
+from services.UserData_Services import get_all_UserData_service, get_one_UserData_service, create_UserData_service, update_UserData_service, delete_UserData_service
 
 
 

@@ -1,4 +1,4 @@
-from repository.ScheduledResourcesRepository import get_all_ScheduledResources, get_one_ScheduledResources, create_ScheduledResources, update_ScheduledResources, delete_ScheduledResources
+from repository.ScheduledResources_Repository import get_all_ScheduledResources, get_one_ScheduledResources, create_ScheduledResources, update_ScheduledResources, delete_ScheduledResources
 
 def get_all_ScheduledResources_service():
     return get_all_ScheduledResources()

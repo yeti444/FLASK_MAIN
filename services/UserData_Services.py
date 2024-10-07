@@ -1,5 +1,5 @@
-from repository.UserDataRepository import get_all_UserData, get_one_UserData, create_UserData, update_UserData, delete_UserData
-from repository.passwordHasherRepository import hashPassword
+from repository.UserData_Repository import get_all_UserData, get_one_UserData, create_UserData, update_UserData, delete_UserData
+from repository.passwordHasher_Repository import hashPassword
 
 def get_all_UserData_service():
     return get_all_UserData()

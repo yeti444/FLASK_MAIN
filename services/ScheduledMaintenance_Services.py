@@ -1,4 +1,4 @@
-from repository.ScheduledMaintenanceRepository import get_all_ScheduledMaintenance, get_one_ScheduledMaintenance, create_ScheduledMaintenance, update_ScheduledMaintenance, delete_ScheduledMaintenance
+from repository.ScheduledMaintenance_Repository import get_all_ScheduledMaintenance, get_one_ScheduledMaintenance, create_ScheduledMaintenance, update_ScheduledMaintenance, delete_ScheduledMaintenance
 
 def get_all_ScheduledMaintenance_service():
     return get_all_ScheduledMaintenance()

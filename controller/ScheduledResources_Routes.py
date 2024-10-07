@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from services.ScheduledResourcesServices import get_all_ScheduledResources_service, get_one_ScheduledResources_service, create_ScheduledResources_service, update_ScheduledResources_service, delete_ScheduledResources_service
+from services.ScheduledResources_Services import get_all_ScheduledResources_service, get_one_ScheduledResources_service, create_ScheduledResources_service, update_ScheduledResources_service, delete_ScheduledResources_service
 
 ScheduledResources_bp = Blueprint('ScheduledResources', __name__)
 

@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from services.checkAvailabilityServices import check_time
+from services.checkAvailability_Services import check_time
 
 checkAvailability_bp = Blueprint('checkAvailability', __name__)
 

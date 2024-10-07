@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from services.ScheduledWorkServices import get_all_ScheduledWork_service, get_one_ScheduledWork_service, create_ScheduledWork_service, update_ScheduledWork_service, delete_ScheduledWork_service
+from services.ScheduledWork_Services import get_all_ScheduledWork_service, get_one_ScheduledWork_service, create_ScheduledWork_service, update_ScheduledWork_service, delete_ScheduledWork_service
 ScheduledWork_bp = Blueprint('ScheduledWork', __name__)
 
 @ScheduledWork_bp.route('/api/ScheduledWork', methods=['GET'])

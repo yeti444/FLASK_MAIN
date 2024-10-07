@@ -1,4 +1,4 @@
-from repository.ScheduledWorkRepository import get_all_ScheduledWork, get_one_ScheduledWork, create_ScheduledWork, update_ScheduledWork, delete_ScheduledWork
+from repository.ScheduledWork_Repository import get_all_ScheduledWork, get_one_ScheduledWork, create_ScheduledWork, update_ScheduledWork, delete_ScheduledWork
 
 def get_all_ScheduledWork_service():
     return get_all_ScheduledWork()

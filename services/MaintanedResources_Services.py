@@ -1,4 +1,4 @@
-from repository.MaintanedResourcesRepository import get_all_MaintanedResources, get_one_MaintanedResources, create_MaintanedResources, update_MaintanedResources, delete_MaintanedResources
+from repository.MaintanedResources_Repository import get_all_MaintanedResources, get_one_MaintanedResources, create_MaintanedResources, update_MaintanedResources, delete_MaintanedResources
 
 def get_all_MaintanedResources_service():
     return get_all_MaintanedResources()

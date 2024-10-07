@@ -1,4 +1,4 @@
-from repository.ResourcesRepository import get_all_Resources, get_one_Resources, create_Resources, update_Resources, delete_Resources
+from repository.Resources_Repository import get_all_Resources, get_one_Resources, create_Resources, update_Resources, delete_Resources
 
 def get_all_Resources_Service():
     return get_all_Resources()
