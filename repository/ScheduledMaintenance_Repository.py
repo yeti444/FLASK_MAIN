@@ -41,7 +41,7 @@ def update_ScheduledMaintenance(maintId, userId, fromDate, duration, description
     conn = db_conn()
     cur = conn.cursor()
     query = "UPDATE scheduledmaintenance SET userId = %s, fromDate = %s, duration = %s, description = %s, maintenancetypeid = %s WHERE maintId = %s;"
-    cur.execute(query, (userId, fromDate, duration, maintId, description, maintenancetypeid,))
+    cur.execute(query, (userId, fromDate, duration, description, maintenancetypeid, maintId))
     conn.commit()
     cur.close()
     conn.close()

@@ -1,27 +1,30 @@
 from flask import Flask
-import importlib
+from controller.ResourceTypes_Routes import ResourceTypes_bp
+from controller.UserRoles_Routes import UserRoles_bp
+from controller.UserData_Routes import UserData_bp
+from controller.Resources_Routes import Resources_bp
+from controller.ScheduledWork_Routes import ScheduledWork_bp
+from controller.ScheduledMaintenance_Routes import ScheduledMaintenance_bp
+from controller.MaintanedResources_Routes import MaintanedResources_bp
+from controller.ScheduledResources_Routes import ScheduledResources_bp
 
-blueprint_modules = [
-    ('controller.ResourceTypes_Routes', ['ResourceTypes_bp']),
-    ('controller.UserRoles_Routes', ['UserRoles_bp']),
-    ('controller.UserData_Routes', ['UserData_bp']),
-    ('controller.Resources_Routes', ['Resources_bp']),
-    ('controller.ScheduledWork_Routes', ['ScheduledWork_bp']),
-    ('controller.ScheduledMaintenance_Routes', ['ScheduledMaintenance_bp']),
-    ('controller.MaintanedResources_Routes', ['MaintanedResources_bp']),
-    ('controller.ScheduledResources_Routes', ['ScheduledResources_bp']),
-    ('controller.insertWork_Routes', ['insertWork_bp']),
-    ('controller.insertMaintenance_Routes', ['insertMaintenance_bp']),
-    ('controller.checkAvailability_Routes', ['checkAvailability_bp']),
-]
+from controller.insertWork_Routes import insertWork_bp
+from controller.insertMaintenance_Routes import insertMaintenance_bp
+from controller.checkAvailability_Routes import checkAvailability_bp
 
 app = Flask(__name__)
+app.register_blueprint(ResourceTypes_bp)
+app.register_blueprint(UserRoles_bp)
+app.register_blueprint(UserData_bp)
+app.register_blueprint(Resources_bp)
+app.register_blueprint(ScheduledWork_bp)
+app.register_blueprint(ScheduledMaintenance_bp)
+app.register_blueprint(MaintanedResources_bp)
+app.register_blueprint(ScheduledResources_bp)
 
-for module_name, blueprint_names in blueprint_modules:
-    module = importlib.import_module(module_name)
-    for blueprint_name in blueprint_names:
-        blueprint = getattr(module, blueprint_name)
-        app.register_blueprint(blueprint)
+app.register_blueprint(insertWork_bp)
+app.register_blueprint(insertMaintenance_bp)
+app.register_blueprint(checkAvailability_bp)
 
 if __name__ == '__main__':
     app.run(port=6000, debug=True)

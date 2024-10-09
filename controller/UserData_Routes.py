@@ -8,7 +8,7 @@ UserData_bp = Blueprint('UserData', __name__)
 @UserData_bp.route('/api/UserData', methods=['GET'])
 def get_UserData():
     entries = get_all_UserData_service()
-    UserData_list = [{'userId': entry.userId,'email': entry.email,'firstName': entry.firstName,'lastName': entry.lastName,'password': entry.password,'createDate': entry.createDate,'roleId': entry.roleId} for entry in entries]
+    UserData_list = [entry.to_dict() for entry in entries]
     return jsonify({'UserData': UserData_list})   
 
 
@@ -24,7 +24,7 @@ def create_UserData():
     if not email or not firstName or not lastName or not password or not roleId:
         return jsonify({'error': 'missing input data'}), 400
     new_entry = create_UserData_service(email, firstName, lastName, password, roleId)
-    return jsonify({'message': 'entry added', 'userId': new_entry})    
+    return jsonify({'message': 'entry added', 'userId': new_entry}), 201   
 
 @UserData_bp.route('/api/UserData/<int:userId>', methods=['PUT'])
 def update_UserData(userId):
@@ -40,7 +40,7 @@ def update_UserData(userId):
     existing_userId = get_one_UserData_service(userId)
     if existing_userId:
         update_UserData_service(email, firstName, lastName, password, roleId, userId)
-        return jsonify({'message': 'update succesfull', 'userId': userId})
+        return jsonify({'message': 'update successfull', 'userId': userId}), 200
     else:
         return jsonify({'error': 'userData not found'}), 404
 
@@ -49,6 +49,6 @@ def delete_UserData(userId):
     existing_data = get_one_UserData_service(userId)
     if existing_data:
         delete_UserData_service(userId)
-        return jsonify({'error': 'userData deleted succesfully', 'userId': userId})
+        return jsonify({'message': 'userData deleted successfully', 'userId': userId}), 200
     else:
         return jsonify({'error': 'userData not found'}), 404

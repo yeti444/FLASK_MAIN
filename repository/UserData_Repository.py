@@ -48,7 +48,7 @@ def update_UserData(email, firstname, lastname, password, roleId, userId):
 def delete_UserData(userid):
     conn = db_conn()
     cur = conn.cursor()
-    query = "delete from userdata where userid = {0};"
+    query = "delete from userdata where userid = %s;"
     cur.execute(query, (userid,))
     conn.commit()
     cur.close()

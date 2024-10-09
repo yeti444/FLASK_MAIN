@@ -19,7 +19,7 @@ def create_Resources():
     if not name or not typeId or not info:
         return jsonify({'error': 'missing input data'}), 400
     new_entry = create_Resources_service(name, typeId, info)
-    return jsonify({'message': 'entry added', 'resourceId': new_entry})           
+    return jsonify({'message': 'entry added', 'resourceId': new_entry}), 201         
 
 @Resources_bp.route('/api/Resources/<int:resourceId>', methods=['PUT'])
 def update_Resources(resourceId):
@@ -33,7 +33,7 @@ def update_Resources(resourceId):
     existing_Resources = get_one_Resources_service(resourceId)
     if existing_Resources:
         update_Resources_service(resourceId, name, typeId, info)
-        return jsonify({'message': 'update succesfull', 'resourceId': resourceId})
+        return jsonify({'message': 'update successfull', 'resourceId': resourceId})
     else:
         return jsonify({'error': 'Resource not found'}), 404
     
@@ -42,6 +42,6 @@ def delete_Resources(resourceId):
     existing_data = get_one_Resources_service(resourceId)
     if existing_data:
         delete_Resources_service(resourceId)
-        return jsonify({'error': 'Resources deleted succesfully', 'resourceId': resourceId})
+        return jsonify({'message': 'Resources deleted successfully', 'resourceId': resourceId})
     else:
         return jsonify({'error': 'Resources not found'}), 404

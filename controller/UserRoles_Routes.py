@@ -6,7 +6,7 @@ UserRoles_bp = Blueprint('UserRoles', __name__)
 @UserRoles_bp.route('/api/UserRoles', methods=['GET'])
 def get_UserRoles():
     entries = get_all_UserRoles_service()
-    UserRoles_list = [{'roleId': entry.roleId,'roleName':entry.roleName} for entry in entries]
+    UserRoles_list = [entry.to_dict() for entry in entries]
     return jsonify({'UserRoles': UserRoles_list})                
 
 @UserRoles_bp.route('/api/UserRoles', methods=['POST'])
@@ -17,7 +17,7 @@ def create_UserRoles():
     if not roleName:
         return jsonify({'error': 'name required'}), 400
     new_entry = create_UserRoles_service(roleName)
-    return jsonify({'message': 'entry added', 'roleId': new_entry})           
+    return jsonify({'message': 'entry added', 'roleId': new_entry}), 201           
 
 @UserRoles_bp.route('/api/UserRoles/<int:roleId>', methods=['PUT'])
 def update_UserRoles(roleId):
@@ -29,7 +29,7 @@ def update_UserRoles(roleId):
     existing_UserRoles = get_one_UserRoles_service(roleId)
     if existing_UserRoles:
         update_UserRoles_service(roleId, roleName)
-        return jsonify({'message': 'update succesfull', 'roleId': roleId})
+        return jsonify({'message': 'update successfull', 'roleId': roleId})
     else:
         return jsonify({'error': 'UserRoles not found'}), 404
     
@@ -38,6 +38,6 @@ def delete_UserRoles(roleId):
     existing_data = get_one_UserRoles_service(roleId)
     if existing_data:
         delete_UserRoles_service(roleId)
-        return jsonify({'error': 'UserRoles deleted succesfully', 'userId': roleId})
+        return jsonify({'message': 'UserRoles deleted successfully', 'roleId': roleId})
     else:
         return jsonify({'error': 'UserRoles not found'}), 404

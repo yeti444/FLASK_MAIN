@@ -18,14 +18,14 @@ def check_time(resourceId, fromDate, duration):
 
     
     for single in S_Resources:
-        if single.get_resourceId() is int(resourceId):
-            if is_overlap(datetime_fromDate, timedelta_duration, single.fromdate(), single.duration()):
+        if single.resourceId is int(resourceId):
+            if is_overlap(datetime_fromDate, timedelta_duration, single.fromdate, single.duration):
                 return True
                 
     
     for single in M_Resources:
-        if single.get_resourceId() is int(resourceId):
-            if is_overlap(datetime_fromDate, timedelta_duration, single.fromdate(), single.duration()):
+        if single.resourceId is int(resourceId):
+            if is_overlap(datetime_fromDate, timedelta_duration, single.fromdate, single.duration):
                 return True
     return False
 

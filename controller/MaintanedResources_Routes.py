@@ -18,7 +18,7 @@ def create_MaintanedResources():
     if not maintId or not resourceId:
         return jsonify({'error': 'missing input data'}), 400
     new_entry = create_MaintanedResources_service(maintId, resourceId)
-    return jsonify({'message': 'entry added', 'maintId': maintId, 'resourceId': resourceId})    
+    return jsonify({'message': 'entry added', 'maintId': maintId, 'resourceId': resourceId}), 201    
 
 @MaintanedResources_bp.route('/api/MaintanedResources/<int:maintId>/<int:resourceId>', methods=['PUT'])
 def update_MaintanedResources(maintId, resourceId):
@@ -32,7 +32,7 @@ def update_MaintanedResources(maintId, resourceId):
     existing_MaintanedResources = get_one_MaintanedResources_service(maintId, resourceId)
     if existing_MaintanedResources:
         update_MaintanedResources_service(maintId, resourceId)
-        return jsonify({'message': 'update succesfull', 'maintId': maintId, 'resourceId': resourceId})
+        return jsonify({'message': 'update successfull', 'maintId': maintId, 'resourceId': resourceId})
     else:
         return jsonify({'error': 'MaintanedResources not found'}), 404
 
@@ -41,6 +41,6 @@ def delete_MaintanedResources(maintId, resourceId):
     existing_data = get_one_MaintanedResources_service(maintId, resourceId)
     if existing_data:
         delete_MaintanedResources_service(maintId, resourceId)
-        return jsonify({'error': 'MaintanedResources deleted succesfully', 'maintId': maintId, 'resourceId': resourceId})
+        return jsonify({'message': 'MaintanedResources deleted successfully', 'maintId': maintId, 'resourceId': resourceId})
     else:
         return jsonify({'error': 'MaintanedResources not found'}), 404

@@ -5,7 +5,7 @@ ScheduledMaintenance_bp = Blueprint('ScheduledMaintenance', __name__)
 @ScheduledMaintenance_bp.route('/api/ScheduledMaintenance', methods=['GET'])
 def get_ScheduledMaintenance():
     entries = get_all_ScheduledMaintenance_service()
-    ScheduledMaintenance_list = [{'maintId': entry.maintId,'userId': entry.userId,'fromDate': entry.fromDate,'duration': entry.duration,'createDate': entry.createDate, 'description': entry.description, 'maintenancetypeid': entry.maintenancetypeid} for entry in entries]
+    ScheduledMaintenance_list = [entry.to_dict() for entry in entries]
     return jsonify({'ScheduledMaintenance': ScheduledMaintenance_list})          
 
 @ScheduledMaintenance_bp.route('/api/ScheduledMaintenance', methods=['POST'])
@@ -20,7 +20,7 @@ def create_ScheduledMaintenance():
     if not userId or not fromDate or not duration or not description or not maintenancetypeid:
         return jsonify({'error': 'missing input data'}), 400
     new_entry = create_ScheduledMaintenance_service(userId, fromDate, duration, description, maintenancetypeid)
-    return jsonify({'message': 'entry added', 'maintId': new_entry})    
+    return jsonify({'message': 'entry added', 'maintId': new_entry}), 201  
 
 @ScheduledMaintenance_bp.route('/api/ScheduledMaintenance/<int:maintId>', methods=['PUT'])
 def update_ScheduledMaintenance(maintId):
@@ -36,7 +36,7 @@ def update_ScheduledMaintenance(maintId):
     existing_userId = get_one_ScheduledMaintenance_service(maintId)
     if existing_userId:
         update_ScheduledMaintenance_service(maintId, userId, fromDate, duration, description, maintenancetypeid)
-        return jsonify({'message': 'update succesfull', 'maintId': maintId})
+        return jsonify({'message': 'update successfull', 'maintId': maintId})
     else:
         return jsonify({'error': 'ScheduledMaintenance not found'}), 404
 
@@ -45,6 +45,6 @@ def delete_ScheduledMaintenance(maintId):
     existing_data = get_one_ScheduledMaintenance_service(maintId)
     if existing_data:
         delete_ScheduledMaintenance_service(maintId)
-        return jsonify({'error': 'ScheduledMaintenance deleted succesfully', 'maintId': maintId})
+        return jsonify({'message': 'ScheduledMaintenance deleted successfully', 'maintId': maintId})
     else:
         return jsonify({'error': 'ScheduledMaintenance not found'}), 404

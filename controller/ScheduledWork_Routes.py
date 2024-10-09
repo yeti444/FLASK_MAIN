@@ -5,7 +5,7 @@ ScheduledWork_bp = Blueprint('ScheduledWork', __name__)
 @ScheduledWork_bp.route('/api/ScheduledWork', methods=['GET'])
 def get_ScheduledWork():
     entries = get_all_ScheduledWork_service()
-    ScheduledWork_list = [{'workId': entry.workId,'userId': entry.userId,'fromDate': entry.fromDate,'duration': entry.duration,'createDate': entry.createDate} for entry in entries]
+    ScheduledWork_list = [entry.to_dict() for entry in entries]
     return jsonify({'ScheduledWork': ScheduledWork_list})          
 
 @ScheduledWork_bp.route('/api/ScheduledWork', methods=['POST'])
@@ -18,7 +18,7 @@ def create_ScheduledWork():
     if not userId or not fromDate or not duration:
         return jsonify({'error': 'missing input data'}), 400
     new_entry = create_ScheduledWork_service(userId, fromDate, duration)
-    return jsonify({'message': 'entry added', 'workId': new_entry})    
+    return jsonify({'message': 'entry added', 'workId': new_entry}), 201 
 
 @ScheduledWork_bp.route('/api/ScheduledWork/<int:workId>', methods=['PUT'])
 def update_ScheduledWork(workId):
@@ -32,7 +32,7 @@ def update_ScheduledWork(workId):
     existing_userId = get_one_ScheduledWork_service(workId)
     if existing_userId:
         update_ScheduledWork_service(workId, userId, fromDate, duration)
-        return jsonify({'message': 'update succesfull', 'workId': workId})
+        return jsonify({'message': 'update successfull', 'workId': workId})
     else:
         return jsonify({'error': 'ScheduledWork not found'}), 404
 
@@ -41,6 +41,6 @@ def delete_ScheduledWork(workId):
     existing_data = get_one_ScheduledWork_service(workId)
     if existing_data:
         delete_ScheduledWork_service(workId)
-        return jsonify({'error': 'ScheduledWork deleted succesfully', 'workId': workId})
+        return jsonify({'message': 'ScheduledWork deleted successfully', 'workId': workId})
     else:
         return jsonify({'error': 'ScheduledWork not found'}), 404

@@ -40,7 +40,7 @@ def create_ScheduledWork(userId, fromDate, duration):
 def update_ScheduledWork(workId, userId, fromDate, duration):
     conn = db_conn()
     cur = conn.cursor()
-    query = "'''UPDATE scheduledwork SET userId = %s, fromDate = %s, duration = %s WHERE workId = %s;"
+    query = "UPDATE scheduledwork SET userId = %s, fromDate = %s, duration = %s WHERE workId = %s;"
     cur.execute(query, (userId, fromDate, duration, workId,))
     conn.commit()
     cur.close()

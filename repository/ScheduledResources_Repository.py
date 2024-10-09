@@ -52,7 +52,7 @@ def update_ScheduledResources(workId, resourceId):
     conn = db_conn()
     cur = conn.cursor()
     query = "UPDATE scheduledresources SET workId = %s, resourceId = %s WHERE workId = %s AND resourceId = %s;"
-    cur.execute(query, (workId, resourceId,))
+    cur.execute(query, (workId, resourceId, workId, resourceId))
     conn.commit()
     cur.close()
     conn.close()
@@ -61,7 +61,7 @@ def delete_ScheduledResources(workId, resourceId):
     conn = db_conn()
     cur = conn.cursor()
     query = "delete from ScheduledResources WHERE workId = %s AND resourceId = %s;"
-    cur.execute(query, (workId, resourceId,))
+    cur.execute(query, (workId, resourceId))
     conn.commit()
     cur.close()
     conn.close()

@@ -14,5 +14,5 @@ def insertWork():
     if not resourceId or not userId or not fromDate or not duration:
         return jsonify({'error': 'missing input data'}), 400
     new_entry = insertNewScheduledWork_service(resourceId, userId, fromDate, duration)
-    return jsonify({'message': 'entry added', 'workId': new_entry, 'resourceId': resourceId})  
+    return jsonify({'message': 'entry added', 'workId': new_entry, 'resourceId': resourceId}), 201
 

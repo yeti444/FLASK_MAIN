@@ -7,4 +7,4 @@ checkAvailability_bp = Blueprint('checkAvailability', __name__)
 def get_MaintanedResources(resourceId):
     date = request.args.get('date')
     interval = request.args.get('interval') 
-    return jsonify({'message': check_time(resourceId, date, interval)})  
+    return jsonify({'message': check_time(resourceId, date, interval)}), 200

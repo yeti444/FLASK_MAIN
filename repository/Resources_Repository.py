@@ -41,7 +41,7 @@ def update_Resources(resourceId, name, typeId, info):
     conn = db_conn()
     cur = conn.cursor()
     query = "UPDATE resources SET name = %s, typeId = %s, info = %s WHERE resourceId = %s;"
-    cur.execute(query, (resourceId, name, typeId, info,))
+    cur.execute(query, (name, typeId, info, resourceId))
     conn.commit()
     cur.close()
     conn.close()

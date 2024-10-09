@@ -16,5 +16,5 @@ def insertWork():
     if not resourceId or not userId or not fromDate or not duration or not description or not maintenancetypeid:
         return jsonify({'error': 'missing input data'}), 400
     new_entry = insertNewMaintenance_service(resourceId, userId, fromDate, duration, description, maintenancetypeid)
-    return jsonify({'message': 'entry added', 'maintId': new_entry, 'resourceId': resourceId})  
+    return jsonify({'message': 'entry added', 'maintId': new_entry, 'resourceId': resourceId}), 201
 
