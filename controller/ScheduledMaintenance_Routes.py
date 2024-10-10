@@ -36,7 +36,7 @@ def update_ScheduledMaintenance(maintId):
     existing_userId = get_one_ScheduledMaintenance_service(maintId)
     if existing_userId:
         update_ScheduledMaintenance_service(maintId, userId, fromDate, duration, description, maintenancetypeid)
-        return jsonify({'message': 'update successfull', 'maintId': maintId})
+        return jsonify({'message': 'update successful', 'maintId': maintId})
     else:
         return jsonify({'error': 'ScheduledMaintenance not found'}), 404
 

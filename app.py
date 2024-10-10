@@ -1,4 +1,8 @@
 from flask import Flask
+from flask_jwt_extended import JWTManager
+from flask_cors import CORS
+
+
 from controller.ResourceTypes_Routes import ResourceTypes_bp
 from controller.UserRoles_Routes import UserRoles_bp
 from controller.UserData_Routes import UserData_bp
@@ -12,7 +16,13 @@ from controller.insertWork_Routes import insertWork_bp
 from controller.insertMaintenance_Routes import insertMaintenance_bp
 from controller.checkAvailability_Routes import checkAvailability_bp
 
+
 app = Flask(__name__)
+jwt = JWTManager(app)
+CORS(app)
+
+
+
 app.register_blueprint(ResourceTypes_bp)
 app.register_blueprint(UserRoles_bp)
 app.register_blueprint(UserData_bp)

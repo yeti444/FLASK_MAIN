@@ -32,7 +32,7 @@ def update_ScheduledWork(workId):
     existing_userId = get_one_ScheduledWork_service(workId)
     if existing_userId:
         update_ScheduledWork_service(workId, userId, fromDate, duration)
-        return jsonify({'message': 'update successfull', 'workId': workId})
+        return jsonify({'message': 'update successful', 'workId': workId})
     else:
         return jsonify({'error': 'ScheduledWork not found'}), 404
 

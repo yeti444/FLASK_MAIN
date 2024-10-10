@@ -29,7 +29,7 @@ def update_ResourceTypes(typeId):
     existing_ResourceType = get_one_ResourceTypes_service(typeId)
     if existing_ResourceType:
         update_ResourceTypes_service(typeId, typeName)
-        return jsonify({'message': 'update successfull', 'typeId': typeId})
+        return jsonify({'message': 'update successful', 'typeId': typeId})
     else:
         return jsonify({'error': 'ResourceType not found'}), 404
     

@@ -32,7 +32,7 @@ def update_MaintanedResources(maintId, resourceId):
     existing_MaintanedResources = get_one_MaintanedResources_service(maintId, resourceId)
     if existing_MaintanedResources:
         update_MaintanedResources_service(maintId, resourceId)
-        return jsonify({'message': 'update successfull', 'maintId': maintId, 'resourceId': resourceId})
+        return jsonify({'message': 'update successful', 'maintId': maintId, 'resourceId': resourceId})
     else:
         return jsonify({'error': 'MaintanedResources not found'}), 404
 

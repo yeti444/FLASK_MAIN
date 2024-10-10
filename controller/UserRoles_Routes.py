@@ -29,7 +29,7 @@ def update_UserRoles(roleId):
     existing_UserRoles = get_one_UserRoles_service(roleId)
     if existing_UserRoles:
         update_UserRoles_service(roleId, roleName)
-        return jsonify({'message': 'update successfull', 'roleId': roleId})
+        return jsonify({'message': 'update successful', 'roleId': roleId})
     else:
         return jsonify({'error': 'UserRoles not found'}), 404
     

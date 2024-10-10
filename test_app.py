@@ -6,6 +6,15 @@ def client():
     app.config['TESTING'] = True
     with app.test_client() as client:
         yield client
+        
+'''
+
+NORMAL:     pytest -v 
+    ~ 4.2s
+FAST:       pytest -n auto -v
+    ~ 3.0s 
+'''
+        
 
 def test_userData(client):
     # GET TEST
@@ -17,7 +26,7 @@ def test_userData(client):
         "email": "testemail@test.com",
         "firstName": "test",
         "lastName": "test",
-        "password": "password",
+        "password": "Password@12",
         "roleId": 1
     })
     assert response.status_code == 201 
@@ -35,7 +44,7 @@ def test_userData(client):
         "email": "edit@edit.com",
         "firstName": "edit",
         "lastName": "edit",
-        "password": "edit",
+        "password": "Password@13",
         "roleId": 1
     })
     assert response.status_code == 200
@@ -45,7 +54,7 @@ def test_userData(client):
     assert "message" in json_data
     assert isinstance(json_data["userId"], int)
     assert json_data["userId"] > 0
-    assert json_data["message"] == "update successfull"
+    assert json_data["message"] == "update successful"
     
     # DELETE TEST
     userId = json_data["userId"]
@@ -90,7 +99,7 @@ def test_userRoles(client):
     assert "message" in json_data
     assert isinstance(json_data["roleId"], int)
     assert json_data["roleId"] > 0
-    assert json_data["message"] == "update successfull"
+    assert json_data["message"] == "update successful"
     
     # DELETE TEST
     roleId = json_data["roleId"]
@@ -139,7 +148,7 @@ def test_Resource(client):
     assert "message" in json_data
     assert isinstance(json_data["resourceId"], int)
     assert json_data["resourceId"] > 0
-    assert json_data["message"] == "update successfull"
+    assert json_data["message"] == "update successful"
     
     # DELETE TEST
     resourceId = json_data["resourceId"]
@@ -184,7 +193,7 @@ def test_ResourceTypes(client):
     assert "message" in json_data
     assert isinstance(json_data["typeId"], int)
     assert json_data["typeId"] > 0
-    assert json_data["message"] == "update successfull"
+    assert json_data["message"] == "update successful"
     
     # DELETE TEST
     typeId = json_data["typeId"]
@@ -235,7 +244,7 @@ def test_ScheduledWork(client):
     assert "message" in json_data
     assert isinstance(json_data["workId"], int)
     assert json_data["workId"] > 0
-    assert json_data["message"] == "update successfull"
+    assert json_data["message"] == "update successful"
     
     # DELETE TEST
     workId = json_data["workId"]
@@ -290,7 +299,7 @@ def test_ScheduledMaintenance(client):
     assert "message" in json_data
     assert isinstance(json_data["maintId"], int)
     assert json_data["maintId"] > 0
-    assert json_data["message"] == "update successfull"
+    assert json_data["message"] == "update successful"
     
     # DELETE TEST
     maintId = json_data["maintId"]
@@ -365,7 +374,7 @@ def test_ScheduledResources(client):
     assert isinstance(json_data["resourceId"], int)
     assert json_data["workId"] > 0
     assert json_data["resourceId"] > 0
-    assert json_data["message"] == "update successfull"
+    assert json_data["message"] == "update successful"
     
     # DELETE TEST
     workId = json_data["workId"]
@@ -452,7 +461,7 @@ def test_MaintanedResources(client):
     assert isinstance(json_data["resourceId"], int)
     assert json_data["maintId"] > 0
     assert json_data["resourceId"] > 0
-    assert json_data["message"] == "update successfull"
+    assert json_data["message"] == "update successful"
     
     # DELETE TEST
     maintId = json_data["maintId"]

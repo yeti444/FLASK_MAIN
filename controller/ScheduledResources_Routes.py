@@ -32,7 +32,7 @@ def update_ScheduledResources(workId, resourceId):
     existing_ScheduledResources = get_one_ScheduledResources_service(workId, resourceId)
     if existing_ScheduledResources:
         update_ScheduledResources_service(workId, resourceId)
-        return jsonify({'message': 'update successfull', 'workId': workId, 'resourceId': resourceId})
+        return jsonify({'message': 'update successful', 'workId': workId, 'resourceId': resourceId})
     else:
         return jsonify({'error': 'ScheduledResources not found'}), 404
 
