@@ -1,0 +1,10 @@
+Flask
+psycopg2
+dotenv
+python-dotenv
+bcrypt
+pytz
+pytest
+pytest-xdist
+flask_jwt_extended
+flask_cors
