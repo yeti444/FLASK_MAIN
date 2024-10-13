@@ -4,11 +4,20 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
+
+
+"""
+DB_HOST=
+DB_PORT=5432
+DB_USERNAME=
+DB_PASSWORD=
+"""
+
 host_input = os.getenv('DB_HOST')
 port_input = os.getenv('DB_PORT')
-
-password_input = os.getenv('DB_PASSWORD')
 username_input = os.getenv('DB_USERNAME')
+password_input = os.getenv('DB_PASSWORD')
 
 
 def db_conn():
