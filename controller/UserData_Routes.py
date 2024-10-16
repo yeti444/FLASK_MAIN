@@ -2,60 +2,53 @@ from flask import Blueprint, jsonify, request
 from services.UserData_Services import get_all_UserData_service, get_one_UserData_service, create_UserData_service, update_UserData_service, delete_UserData_service
 
 
-
 UserData_bp = Blueprint('UserData', __name__)
+
+def validate_user_data(data):
+    required_fields = ['email', 'firstName', 'lastName', 'password', 'roleId']
+    for field in required_fields:
+        if field not in data:
+            return False, f"Missing input data: {field}"
+    return True, ""
 
 @UserData_bp.route('/api/UserData', methods=['GET'])
 def get_UserData():
     entries = get_all_UserData_service()
-    UserData_list = [entry.to_dict() for entry in entries]
-    return jsonify({'UserData': UserData_list})   
-
+    return jsonify({'UserData': [entry.to_dict() for entry in entries]})
 
 @UserData_bp.route('/api/UserData', methods=['POST'])
 def create_UserData():
     data = request.get_json()
-    email = data.get('email')
-    firstName = data.get('firstName')
-    lastName = data.get('lastName')
-    password = data.get('password')
-    roleId = data.get('roleId')
-    if not email or not firstName or not lastName or not password or not roleId:
-        return jsonify({'error': 'missing input data'}), 400
-    
+    is_valid, error_msg = validate_user_data(data)
+    if not is_valid:
+        return jsonify({'error': error_msg}), 400
+
     try:
-        new_entry = create_UserData_service(email, firstName, lastName, password, roleId)
-        return jsonify({'message': 'entry added', 'userId': new_entry}), 201
+        new_entry = create_UserData_service(data['email'], data['firstName'], data['lastName'], data['password'], data['roleId'])
+        return jsonify({'message': 'Entry added', 'userId': new_entry}), 201
     except ValueError as ve:
         return jsonify({'error': str(ve)}), 400
     except Exception as e:
-        return jsonify({'error': 'could not create user', 'details': str(e)}), 500
-
+        return jsonify({'error': 'Could not create userData', 'details': str(e)}), 500
 
 @UserData_bp.route('/api/UserData/<int:userId>', methods=['PUT'])
 def update_UserData(userId):
     data = request.get_json()
-    email = data.get('email')
-    firstName = data.get('firstName')
-    lastName = data.get('lastName')
-    password = data.get('password')
-    roleId = data.get('roleId')
+    is_valid, error_msg = validate_user_data(data)
+    if not is_valid:
+        return jsonify({'error': error_msg}), 400
 
-    if not email or not firstName or not lastName or not password or not roleId:
-        return jsonify({'error': 'missing input data'}), 400
-    
     existing_user = get_one_UserData_service(userId)
     if not existing_user:
-        return jsonify({'error': 'userData not found'}), 404
+        return jsonify({'error': 'User data not found'}), 404
 
     try:
-        update_UserData_service(email, firstName, lastName, password, roleId, userId)
-        return jsonify({'message': 'update successful', 'userId': userId}), 200
+        update_UserData_service(data['email'], data['firstName'], data['lastName'], data['password'], data['roleId'], userId)
+        return jsonify({'message': 'Update successful', 'userId': userId}), 200
     except ValueError as ve:
         return jsonify({'error': str(ve)}), 400
     except Exception as e:
-        return jsonify({'error': 'could not update user data', 'details': str(e)}), 500
-
+        return jsonify({'error': 'Could not update userData', 'details': str(e)}), 500
 
 @UserData_bp.route('/api/UserData/<int:userId>', methods=['DELETE'])
 def delete_UserData(userId):
@@ -65,6 +58,5 @@ def delete_UserData(userId):
             delete_UserData_service(userId)
             return jsonify({'message': 'userData deleted successfully', 'userId': userId}), 200
         except Exception as e:
-            return jsonify({'error': 'could not delete user data', 'details': str(e)}), 500 
-    else:
-        return jsonify({'error': 'userData not found'}), 404
+            return jsonify({'error': 'Could not delete userData', 'details': str(e)}), 500
+    return jsonify({'error': 'User data not found'}), 404

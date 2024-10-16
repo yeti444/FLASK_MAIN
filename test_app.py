@@ -36,7 +36,7 @@ def test_userData(client):
     assert "userId" in json_data
     assert isinstance(json_data["userId"], int)
     assert json_data["userId"] > 0
-    assert json_data["message"] == "entry added"
+    assert json_data["message"] == "Entry added"
     
     #PUT TEST
     userId = json_data["userId"]
@@ -54,7 +54,7 @@ def test_userData(client):
     assert "message" in json_data
     assert isinstance(json_data["userId"], int)
     assert json_data["userId"] > 0
-    assert json_data["message"] == "update successful"
+    assert json_data["message"] == "Update successful"
     
     # DELETE TEST
     userId = json_data["userId"]

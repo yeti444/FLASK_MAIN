@@ -18,6 +18,18 @@ from controller.CheckAvailability_Routes import checkAvailability_bp
 
 app = Flask(__name__)
 
+'''
+
+DB_HOST=
+DB_PORT=
+DB_USERNAME=
+DB_PASSWORD=
+
+SECRET_KEY=
+
+
+'''
+
 
 load_dotenv()
 CORS(app)
@@ -56,3 +68,4 @@ def missing_token_callback(error):
 
 if __name__ == '__main__':
     app.run(port=6000, debug=True)
+
