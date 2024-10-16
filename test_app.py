@@ -547,3 +547,48 @@ def test_checkAvailability(client):
     json_data = response.get_json()
     assert "message" in json_data
     assert isinstance(json_data["message"], bool)
+
+def test_maintenanceType(client):
+    # GET TEST
+    response = client.get('/api/MaintenanceType')
+    assert response.status_code == 200
+    
+    # POST TEST
+    response = client.post('/api/MaintenanceType', json={
+        "typeName": "testType",
+    })
+    assert response.status_code == 201 
+    json_data = response.get_json()
+    
+    assert "message" in json_data
+    assert "maintenanceTypeId" in json_data
+    assert isinstance(json_data["maintenanceTypeId"], int)
+    assert json_data["maintenanceTypeId"] > 0
+    assert json_data["message"] == "entry added"
+    
+    #PUT TEST
+    maintenanceTypeId = json_data["maintenanceTypeId"]
+    response = client.put(f'/api/MaintenanceType/{maintenanceTypeId}', json={
+        "typeName": "sigma",
+    })
+    assert response.status_code == 200
+    json_data = response.get_json()
+    
+    assert "maintenanceTypeId" in json_data
+    assert "message" in json_data
+    assert isinstance(json_data["maintenanceTypeId"], int)
+    assert json_data["maintenanceTypeId"] > 0
+    assert json_data["message"] == "update successful"
+    
+    # DELETE TEST
+    maintenanceTypeId = json_data["maintenanceTypeId"]
+    response = client.delete(f'/api/MaintenanceType/{maintenanceTypeId}')
+    
+    assert response.status_code == 200
+    json_data = response.get_json()
+    
+    assert "maintenanceTypeId" in json_data
+    assert "message" in json_data
+    assert isinstance(json_data["maintenanceTypeId"], int)
+    assert json_data["maintenanceTypeId"] > 0
+    assert json_data["message"] == "maintenanceType deleted successfully"

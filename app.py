@@ -11,6 +11,7 @@ from controller.ScheduledWork_Routes import ScheduledWork_bp
 from controller.ScheduledMaintenance_Routes import ScheduledMaintenance_bp
 from controller.MaintanedResources_Routes import MaintanedResources_bp
 from controller.ScheduledResources_Routes import ScheduledResources_bp
+from controller.MaintenanceType_Routes import MaintenanceType_bp
 
 from controller.Insert_Routes import insertWork_bp, insertMaintenance_bp
 from controller.CheckAvailability_Routes import checkAvailability_bp
@@ -30,6 +31,7 @@ app.register_blueprint(ScheduledWork_bp)
 app.register_blueprint(ScheduledMaintenance_bp)
 app.register_blueprint(MaintanedResources_bp)
 app.register_blueprint(ScheduledResources_bp)
+app.register_blueprint(MaintenanceType_bp)
 
 app.register_blueprint(insertWork_bp)
 app.register_blueprint(insertMaintenance_bp)

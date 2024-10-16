@@ -16,8 +16,6 @@ def create_UserData_service(email, firstName, lastName, password, roleId):
 
     return create_UserData(email, firstName, lastName, hashPassword(password), roleId)
 
-
-
 def update_UserData_service(email, firstName, lastName, password, roleId, userId):
     if not is_valid_email(email):
         raise ValueError('invalid email format')
