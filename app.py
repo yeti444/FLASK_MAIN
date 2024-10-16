@@ -18,19 +18,6 @@ from controller.CheckAvailability_Routes import checkAvailability_bp
 
 app = Flask(__name__)
 
-'''
-
-DB_HOST=
-DB_PORT=
-DB_USERNAME=
-DB_PASSWORD=
-
-SECRET_KEY=
-
-
-'''
-
-
 load_dotenv()
 CORS(app)
 
