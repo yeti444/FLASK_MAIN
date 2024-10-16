@@ -6,7 +6,7 @@ ScheduledResources_bp = Blueprint('ScheduledResources', __name__)
 @ScheduledResources_bp.route('/api/ScheduledResources', methods=['GET'])
 def get_ScheduledResources():
     entries = get_all_ScheduledResources_service()
-    ScheduledResources_list = [{'workId': entry.workId,'resourceId': entry.resourceId} for entry in entries]
+    ScheduledResources_list = [entry.to_dict() for entry in entries]
     return jsonify({'ScheduledResources': ScheduledResources_list})          
 
 @ScheduledResources_bp.route('/api/ScheduledResources', methods=['POST'])

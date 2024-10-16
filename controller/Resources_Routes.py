@@ -6,7 +6,7 @@ Resources_bp = Blueprint('Resources', __name__)
 @Resources_bp.route('/api/Resources', methods=['GET'])
 def get_Resources():
     entries = get_all_Resources_Service()
-    Resources_list = [{'resourceId': entry.resourceId,'name':entry.name,'typeId':entry.typeId,'info':entry.info,'createDate':entry.createDate} for entry in entries]
+    Resources_list = [entry.to_dict() for entry in entries]
     return jsonify({'Resources': Resources_list})                
 
 @Resources_bp.route('/api/Resources', methods=['POST'])

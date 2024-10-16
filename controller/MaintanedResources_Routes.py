@@ -6,7 +6,7 @@ MaintanedResources_bp = Blueprint('MaintanedResources', __name__)
 @MaintanedResources_bp.route('/api/MaintanedResources', methods=['GET'])
 def get_MaintanedResources():
     entries = get_all_MaintanedResources_service()
-    MaintanedResources_list = [{'maintId': entry.maintId,'resourceId': entry.resourceId} for entry in entries]
+    MaintanedResources_list = [entry.to_dict() for entry in entries]
     return jsonify({'MaintanedResources': MaintanedResources_list})          
 
 @MaintanedResources_bp.route('/api/MaintanedResources', methods=['POST'])
