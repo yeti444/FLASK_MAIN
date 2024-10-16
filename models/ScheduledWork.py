@@ -5,6 +5,7 @@ class ScheduledWork:
         self.__fromDate = fromDate
         self.__duration = duration
         self.__createDate = createDate
+        self.__status = None
     
     @property
     def workId(self):
@@ -26,6 +27,14 @@ class ScheduledWork:
     def createDate(self):
         return self.__createDate
     
+    @property
+    def status(self):
+        return self.__status
+
+    @status.setter
+    def status(self, value):
+        self.__status = value
+
     def to_dict(self):
         return {
             "workId": self.__workId,
@@ -33,6 +42,5 @@ class ScheduledWork:
             "fromDate": self.__fromDate,
             "duration": str(self.__duration),
             "createDate": self.__createDate,
+            "status": self.__status,
         }
-
-        

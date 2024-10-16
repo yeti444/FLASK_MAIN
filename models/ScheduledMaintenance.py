@@ -7,6 +7,7 @@ class ScheduledMaintenance:
         self.__createDate = createDate
         self.__description = description
         self.__maintenancetypeid = maintenancetypeid
+        self.__status = None
 
     @property
     def maintId(self):
@@ -36,6 +37,14 @@ class ScheduledMaintenance:
     def maintenancetypeid(self):
         return self.__maintenancetypeid
     
+    @property
+    def status(self):
+        return self.__status
+
+    @status.setter
+    def status(self, value):
+        self.__status = value
+        
     def to_dict(self):
         return {
             "workId": self.__maintId,
@@ -44,7 +53,8 @@ class ScheduledMaintenance:
             "duration": str(self.__duration),
             "createDate": self.__createDate,
             "description": self.__description,
-            "maintenancetypeid": self.__maintenancetypeid
+            "maintenancetypeid": self.__maintenancetypeid,
+            "status": self.__status
         }
 
         

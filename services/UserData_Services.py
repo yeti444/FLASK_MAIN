@@ -1,6 +1,5 @@
 from repository.UserData_Repository import get_all_UserData, get_one_UserData, create_UserData, update_UserData, delete_UserData
-from repository.register_Repository import is_password_strong, is_valid_email
-from repository.passwordHasher_Repository import hashPassword
+from utils.utils import hashPassword, checkPassword, is_password_strong, is_valid_email
 
 def get_all_UserData_service():
     return get_all_UserData()

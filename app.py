@@ -12,9 +12,8 @@ from controller.ScheduledMaintenance_Routes import ScheduledMaintenance_bp
 from controller.MaintanedResources_Routes import MaintanedResources_bp
 from controller.ScheduledResources_Routes import ScheduledResources_bp
 
-from controller.insertWork_Routes import insertWork_bp
-from controller.insertMaintenance_Routes import insertMaintenance_bp
-from controller.checkAvailability_Routes import checkAvailability_bp
+from controller.Insert_Routes import insertWork_bp, insertMaintenance_bp
+from controller.CheckAvailability_Routes import checkAvailability_bp
 
 
 app = Flask(__name__)

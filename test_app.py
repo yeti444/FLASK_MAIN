@@ -547,4 +547,3 @@ def test_checkAvailability(client):
     json_data = response.get_json()
     assert "message" in json_data
     assert isinstance(json_data["message"], bool)
-    
