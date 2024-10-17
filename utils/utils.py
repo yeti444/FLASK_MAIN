@@ -50,7 +50,8 @@ def hashPassword(password):
 
 def checkPassword(password, hashed_password):
     byte_password = password.encode('utf-8')
-    return bcrypt.checkpw(byte_password, hashed_password)
+    byte_hashed_password = bytes.fromhex(hashed_password[2:])
+    return bcrypt.checkpw(byte_password, byte_hashed_password)
 
 
 def is_password_strong(password):

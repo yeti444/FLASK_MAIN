@@ -37,7 +37,7 @@ def get_one_ScheduledResources(workId, resourceId):
     if entry:
         return ScheduledResources(workId = entry[0], resourceId = entry[1])
     else: 
-        None
+        return None
 
 def create_ScheduledResources(workId, resourceId):
     conn = db_conn()

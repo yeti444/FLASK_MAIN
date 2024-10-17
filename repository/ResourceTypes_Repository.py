@@ -24,7 +24,7 @@ def get_one_ResourceTypes(typeId):
     if entry:
         return ResourceTypes(typeId=entry[0], typeName=entry[1])
     else: 
-        None
+        return None
 
 def create_ResourceTypes(typeName):
     conn = db_conn()

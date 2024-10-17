@@ -23,7 +23,7 @@ def get_one_MaintenanceType(maintenanceTypeId):
     if entry:
         return MaintenanceType(maintenanceTypeId=entry[0], typeName=entry[1])
     else: 
-        None
+        return None
 
 def create_MaintenanceType(typeName):
     conn = db_conn()

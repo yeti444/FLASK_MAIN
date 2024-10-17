@@ -24,7 +24,7 @@ def get_one_ScheduledWork(workId):
     if entry:
         return ScheduledWork(workId = entry[0], userId = entry[1], fromDate = entry[2], duration = entry[3], createDate = entry[4])
     else: 
-        None
+        return None
 
 def create_ScheduledWork(userId, fromDate, duration):
     conn = db_conn()

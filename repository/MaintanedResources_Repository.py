@@ -37,7 +37,7 @@ def get_one_MaintanedResources(maintId, resourceId):
     if entry:
         return MaintanedResources(maintId = entry[0], resourceId = entry[1])
     else: 
-        None
+        return None
 
 def create_MaintanedResources(maintId, resourceId):
     conn = db_conn()

@@ -1,5 +1,7 @@
 from flask import Blueprint, jsonify, request
-from services.UserData_Services import get_all_UserData_service, get_one_UserData_service, create_UserData_service, update_UserData_service, delete_UserData_service
+from services.UserData_Services import get_all_UserData_service, get_one_UserData_service, create_UserData_service, update_UserData_service, delete_UserData_service, login_UserData_service
+
+from flask_jwt_extended import jwt_required
 
 
 UserData_bp = Blueprint('UserData', __name__)
@@ -32,6 +34,7 @@ def create_UserData():
         return jsonify({'error': 'Could not create userData', 'details': str(e)}), 500
 
 @UserData_bp.route('/api/UserData/<int:userId>', methods=['PUT'])
+#@jwt_required()
 def update_UserData(userId):
     data = request.get_json()
     is_valid, error_msg = validate_user_data(data)
@@ -60,3 +63,20 @@ def delete_UserData(userId):
         except Exception as e:
             return jsonify({'error': 'Could not delete userData', 'details': str(e)}), 500
     return jsonify({'error': 'User data not found'}), 404
+
+@UserData_bp.route('/api/login', methods=['POST'])
+def login_UserData():
+    data = request.get_json()
+    email = data.get('email')
+    password = data.get('password')
+    
+    if not email or not password:
+        return jsonify({'error': 'Missing email or password'}), 400
+    
+    try:
+        login_data = login_UserData_service(email, password)
+        return jsonify({'message': 'Login successful','token': login_data['token'], 'userId': login_data['userId'], 'email': login_data['email']}), 200
+    except ValueError as ve:
+        return jsonify({'error': str(ve)}), 401
+    except Exception as e:
+        return jsonify({'error': 'Unknown', 'details': str(e)}), 500

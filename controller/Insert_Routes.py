@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request
 from services.Insert_Services import insertNewScheduledWork_service, insertNewMaintenance_service
 
 insertWork_bp = Blueprint('inserWork', __name__)
-insertMaintenance_bp = Blueprint('insertMaintenance_bp', __name__)
+insertMaintenance_bp = Blueprint('insertMaintenance', __name__)
 
 @insertMaintenance_bp.route('/api/insertMaintenance', methods=['POST'])
 def insertWork():

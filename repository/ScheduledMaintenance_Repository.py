@@ -24,7 +24,7 @@ def get_one_ScheduledMaintenance(maintId):
     if ScheduledMaintenance:
         return ScheduledMaintenance(maintId = entry[0], userId = entry[1], fromDate = entry[2], duration = entry[3], createDate = entry[4], description=entry[5], maintenancetypeid=entry[6])
     else: 
-        None
+        return None
 
 def create_ScheduledMaintenance(userId, fromDate, duration, description, maintenancetypeid):
     conn = db_conn()

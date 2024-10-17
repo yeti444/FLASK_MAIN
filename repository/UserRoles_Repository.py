@@ -23,7 +23,7 @@ def get_one_UserRoles(roleId):
     if entry:
         return UserRoles(roleId=entry[0], roleName=entry[1])
     else: 
-        None
+        return None
 
 def create_UserRoles(roleName):
     conn = db_conn()

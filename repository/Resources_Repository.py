@@ -24,7 +24,7 @@ def get_one_Resources(resourceId):
     if entry:
         return Resources(resourceId = entry[0], name = entry[1], typeId = entry[2], info = entry[3], createDate=entry[4])
     else: 
-        None
+        return None
 
 def create_Resources(name, typeId, info):
     conn = db_conn()
