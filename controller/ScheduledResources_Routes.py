@@ -1,15 +1,19 @@
 from flask import Blueprint, jsonify, request
 from services.ScheduledResources_Services import get_all_ScheduledResources_service, get_one_ScheduledResources_service, create_ScheduledResources_service, update_ScheduledResources_service, delete_ScheduledResources_service
 
+from utils.utils import role_required
+
 ScheduledResources_bp = Blueprint('ScheduledResources', __name__)
 
 @ScheduledResources_bp.route('/api/ScheduledResources', methods=['GET'])
+@role_required(['Admin', 'User'])
 def get_ScheduledResources():
     entries = get_all_ScheduledResources_service()
     ScheduledResources_list = [entry.to_dict() for entry in entries]
     return jsonify({'ScheduledResources': ScheduledResources_list})          
 
 @ScheduledResources_bp.route('/api/ScheduledResources', methods=['POST'])
+@role_required(['Admin', 'User'])
 def create_ScheduledResources():
     data = request.get_json()
     workId= data.get('workId')
@@ -21,6 +25,7 @@ def create_ScheduledResources():
     return jsonify({'message': 'entry added', 'workId': workId, 'resourceId': resourceId}), 201    
 
 @ScheduledResources_bp.route('/api/ScheduledResources/<int:workId>/<int:resourceId>', methods=['PUT'])
+@role_required(['Admin', 'User'])
 def update_ScheduledResources(workId, resourceId):
     data = request.get_json()
     workId= data.get('workId')
@@ -37,6 +42,7 @@ def update_ScheduledResources(workId, resourceId):
         return jsonify({'error': 'ScheduledResources not found'}), 404
 
 @ScheduledResources_bp.route('/api/ScheduledResources/<int:workId>/<int:resourceId>', methods=['DELETE'])
+@role_required(['Admin', 'User'])
 def delete_ScheduledResources(workId, resourceId):
     existing_data = get_one_ScheduledResources_service(workId, resourceId)
     if existing_data:

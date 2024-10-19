@@ -1,15 +1,19 @@
 from flask import Blueprint, jsonify, request
 from services.UserRoles_Services import get_all_UserRoles_service, get_one_UserRoles_service, create_UserRoles_service, update_UserRoles_service, delete_UserRoles_service
 
+from utils.utils import role_required
+
 UserRoles_bp = Blueprint('UserRoles', __name__)
 
 @UserRoles_bp.route('/api/UserRoles', methods=['GET'])
+@role_required(['Admin', 'User'])
 def get_UserRoles():
     entries = get_all_UserRoles_service()
     UserRoles_list = [entry.to_dict() for entry in entries]
     return jsonify({'UserRoles': UserRoles_list})                
 
 @UserRoles_bp.route('/api/UserRoles', methods=['POST'])
+@role_required(['Mistake']) #2db jogosultsági szint van csak, nem kell módosítani TODO: dinamikus jogosultságok
 def create_UserRoles():
     data = request.get_json()
     roleName= data.get('roleName')
@@ -20,6 +24,7 @@ def create_UserRoles():
     return jsonify({'message': 'entry added', 'roleId': new_entry}), 201           
 
 @UserRoles_bp.route('/api/UserRoles/<int:roleId>', methods=['PUT'])
+@role_required(['Mistake']) #2db jogosultsági szint van csak, nem kell módosítani TODO: dinamikus jogosultságok
 def update_UserRoles(roleId):
     data = request.get_json()
     roleName= data.get('roleName')
@@ -34,6 +39,7 @@ def update_UserRoles(roleId):
         return jsonify({'error': 'UserRoles not found'}), 404
     
 @UserRoles_bp.route('/api/UserRoles/<int:roleId>', methods=['DELETE'])
+@role_required(['Mistake']) #2db jogosultsági szint van csak, nem kell módosítani TODO: dinamikus jogosultságok
 def delete_UserRoles(roleId):
     existing_data = get_one_UserRoles_service(roleId)
     if existing_data:

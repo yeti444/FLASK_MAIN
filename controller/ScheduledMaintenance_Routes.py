@@ -1,14 +1,19 @@
 from flask import Blueprint, jsonify, request
 from services.ScheduledMaintenance_Services import get_all_ScheduledMaintenance_service, get_one_ScheduledMaintenance_service, create_ScheduledMaintenance_service, update_ScheduledMaintenance_service, delete_ScheduledMaintenance_service
+
+from utils.utils import role_required
+
 ScheduledMaintenance_bp = Blueprint('ScheduledMaintenance', __name__)
 
 @ScheduledMaintenance_bp.route('/api/ScheduledMaintenance', methods=['GET'])
+@role_required(['Admin', 'User'])
 def get_ScheduledMaintenance():
     entries = get_all_ScheduledMaintenance_service()
     ScheduledMaintenance_list = [entry.to_dict() for entry in entries]
     return jsonify({'ScheduledMaintenance': ScheduledMaintenance_list})          
 
 @ScheduledMaintenance_bp.route('/api/ScheduledMaintenance', methods=['POST'])
+@role_required(['Admin', 'User'])
 def create_ScheduledMaintenance():
     data = request.get_json()
     userId= data.get('userId')
@@ -23,6 +28,7 @@ def create_ScheduledMaintenance():
     return jsonify({'message': 'entry added', 'maintId': new_entry}), 201  
 
 @ScheduledMaintenance_bp.route('/api/ScheduledMaintenance/<int:maintId>', methods=['PUT'])
+@role_required(['Admin', 'User'])
 def update_ScheduledMaintenance(maintId):
     data = request.get_json()
     userId= data.get('userId')
@@ -41,6 +47,7 @@ def update_ScheduledMaintenance(maintId):
         return jsonify({'error': 'ScheduledMaintenance not found'}), 404
 
 @ScheduledMaintenance_bp.route('/api/ScheduledMaintenance/<int:maintId>', methods=['DELETE'])
+@role_required(['Admin', 'User'])
 def delete_ScheduledMaintenance(maintId):
     existing_data = get_one_ScheduledMaintenance_service(maintId)
     if existing_data:

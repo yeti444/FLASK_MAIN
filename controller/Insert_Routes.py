@@ -1,10 +1,13 @@
 from flask import Blueprint, jsonify, request
 from services.Insert_Services import insertNewScheduledWork_service, insertNewMaintenance_service
 
+from utils.utils import role_required
+
 insertWork_bp = Blueprint('inserWork', __name__)
 insertMaintenance_bp = Blueprint('insertMaintenance', __name__)
 
 @insertMaintenance_bp.route('/api/insertMaintenance', methods=['POST'])
+@role_required(['Admin', 'User'])
 def insertWork():
     data = request.get_json()
     resourceId= data.get('resourceId')
@@ -20,6 +23,7 @@ def insertWork():
     return jsonify({'message': 'entry added', 'maintId': new_entry, 'resourceId': resourceId}), 201
 
 @insertWork_bp.route('/api/insertWork', methods=['POST'])
+@role_required(['Admin', 'User'])
 def insertWork():
     data = request.get_json()
     resourceId= data.get('resourceId')

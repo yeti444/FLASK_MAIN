@@ -3,6 +3,26 @@ import re
 import pytz
 import bcrypt
 
+from flask import jsonify
+from flask_jwt_extended import get_jwt_identity, jwt_required
+from functools import wraps
+from services.UserRoles_Services import get_one_UserRoles_service
+
+def role_required(allowed_roles):
+    def wrapper(fn):
+        @wraps(fn)
+        @jwt_required()
+        def decorated_view(*args, **kwargs):
+            current_user = get_jwt_identity()
+            role_id = current_user['roleId']
+            role_name = get_one_UserRoles_service(role_id).roleName
+
+            if role_name not in allowed_roles and role_name != 'Admin':
+                return jsonify({'error': 'Unauthorized'}), 403
+            return fn(*args, **kwargs)
+        return decorated_view
+    return wrapper
+
 def calculate_status(entry):
     timezone = entry.fromDate.tzinfo
     current_time = datetime.now(timezone)

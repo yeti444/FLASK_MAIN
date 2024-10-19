@@ -1,15 +1,19 @@
 from flask import Blueprint, jsonify, request
 from services.ResourceTypes_Services import get_all_ResourceTypes_service, get_one_ResourceTypes_service, create_ResourceTypes_service, update_ResourceTypes_service, delete_ResourceTypes_service
 
+from utils.utils import role_required
+
 ResourceTypes_bp = Blueprint('ResourceTypes', __name__)
 
 @ResourceTypes_bp.route('/api/ResourceTypes', methods=['GET'])
+@role_required(['Admin', 'User'])
 def get_ResourceTypes():
     entries = get_all_ResourceTypes_service()
     ResourceTypes_list = [entry.to_dict() for entry in entries]
     return jsonify({'ResourceTypes': ResourceTypes_list})                
 
 @ResourceTypes_bp.route('/api/ResourceTypes', methods=['POST'])
+@role_required(['Admin'])
 def create_ResourceTypes():
     data = request.get_json()
     typeName= data.get('typeName')
@@ -20,6 +24,7 @@ def create_ResourceTypes():
     return jsonify({'message': 'entry added', 'typeId': new_entry}), 201          
 
 @ResourceTypes_bp.route('/api/ResourceTypes/<int:typeId>', methods=['PUT'])
+@role_required(['Admin'])
 def update_ResourceTypes(typeId):
     data = request.get_json()
     typeName= data.get('typeName')
@@ -34,6 +39,7 @@ def update_ResourceTypes(typeId):
         return jsonify({'error': 'ResourceType not found'}), 404
     
 @ResourceTypes_bp.route('/api/ResourceTypes/<int:typeId>', methods=['DELETE'])
+@role_required(['Admin'])
 def delete_ResourceTypes(typeId):
     existing_data = get_one_ResourceTypes_service(typeId)
     if existing_data:
