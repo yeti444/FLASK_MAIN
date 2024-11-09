@@ -1,6 +1,6 @@
 from repository.UserData_Repository import get_all_UserData, get_one_UserData, create_UserData, update_UserData, delete_UserData, get_one_UserData_email
 from repository.UserRoles_Repository import get_one_UserRoles
-from utils.utils import hashPassword, checkPassword, is_password_strong, is_valid_email
+from utils.utils import hashPassword, checkPassword, validate_user_data
 from flask_jwt_extended import create_access_token
 
 
@@ -46,9 +46,5 @@ def login_UserData_service(email, password):
         raise ValueError("Invalid email or password")
 
 
-def validate_user_data(email, password):
-    if not is_valid_email(email):
-        raise ValueError('Invalid email format')
-    if not is_password_strong(password):
-        raise ValueError('Invalid password')
+
 

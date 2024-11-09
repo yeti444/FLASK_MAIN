@@ -8,6 +8,14 @@ from flask_jwt_extended import get_jwt_identity, jwt_required
 from functools import wraps
 from services.UserRoles_Services import get_one_UserRoles_service
 
+
+
+def validate_user_data(email, password):
+    if not is_valid_email(email):
+        raise ValueError('Invalid email format')
+    if not is_password_strong(password):
+        raise ValueError('Invalid password')
+
 def role_required(allowed_roles):
     def wrapper(fn):
         @wraps(fn)

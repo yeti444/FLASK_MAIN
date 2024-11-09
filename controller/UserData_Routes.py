@@ -30,7 +30,7 @@ def create_UserData():
         return jsonify({'error': error_msg}), 400
 
     try:
-        new_entry = create_UserData_service(data['email'], data['firstName'], data['lastName'], data['password'], data['roleId'])
+        new_entry = create_UserData_service(data['email'], data['firstName'], data['lastName'], data['password'], 2)
         return jsonify({'message': 'Entry added', 'userId': new_entry}), 201
     except ValueError as ve:
         return jsonify({'error': str(ve)}), 400
