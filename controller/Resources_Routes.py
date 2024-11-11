@@ -6,14 +6,20 @@ from utils.utils import role_required
 Resources_bp = Blueprint('Resources', __name__)
 
 @Resources_bp.route('/api/Resources', methods=['GET'])
-@role_required(['Admin', 'User'])
+#@role_required(['Admin', 'User'])
 def get_Resources():
     entries = get_all_Resources_Service()
     Resources_list = [entry.to_dict() for entry in entries]
-    return jsonify({'Resources': Resources_list})                
+    return jsonify({'Resources': Resources_list})         
+
+@Resources_bp.route('/api/Resources/<int:resourceId>', methods=['GET'])
+#@role_required(['Admin', 'User'])
+def get_one_Resources(resourceId):
+    entry = get_one_Resources_service(resourceId)
+    return jsonify(entry.to_dict())        
 
 @Resources_bp.route('/api/Resources', methods=['POST'])
-@role_required(['Admin'])
+#@role_required(['Admin'])
 def create_Resources():
     data = request.get_json()
     name= data.get('name')
@@ -26,7 +32,7 @@ def create_Resources():
     return jsonify({'message': 'entry added', 'resourceId': new_entry}), 201         
 
 @Resources_bp.route('/api/Resources/<int:resourceId>', methods=['PUT'])
-@role_required(['Admin'])
+#@role_required(['Admin'])
 def update_Resources(resourceId):
     data = request.get_json()
     name= data.get('name')
@@ -43,7 +49,7 @@ def update_Resources(resourceId):
         return jsonify({'error': 'Resource not found'}), 404
     
 @Resources_bp.route('/api/Resources/<int:resourceId>', methods=['DELETE'])
-@role_required(['Admin'])
+#@role_required(['Admin'])
 def delete_Resources(resourceId):
     existing_data = get_one_Resources_service(resourceId)
     if existing_data:

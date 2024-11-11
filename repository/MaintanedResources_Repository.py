@@ -48,11 +48,11 @@ def create_MaintanedResources(maintId, resourceId):
     cur.close()
     conn.close()
 
-def update_MaintanedResources(maintId, resourceId):
+def update_MaintanedResources(new_maintId, new_resourceId, maintId, resourceId):
     conn = db_conn()
     cur = conn.cursor()
     query = "UPDATE maintanedresources SET maintId = %s, resourceId = %s WHERE maintId = %s AND resourceId = %s;"
-    cur.execute(query, (maintId, resourceId, maintId, resourceId))
+    cur.execute(query, (new_maintId, new_resourceId, maintId, resourceId))
     conn.commit()
     cur.close()
     conn.close()

@@ -19,10 +19,26 @@ def validate_user_data(data):
 @role_required(['User', 'Admin'])
 def get_UserData():
     entries = get_all_UserData_service()
-    return jsonify({'UserData': [entry.to_dict() for entry in entries]})
+    user_data_dict = {entry.userId: entry.to_dict() for entry in entries}
+    return jsonify({'UserData': user_data_dict})
+
+    """
+    @UserData_bp.route('/api/UserData', methods=['GET'])
+    @role_required(['User', 'Admin'])
+    def get_UserData():
+        entries = get_all_UserData_service()
+        user_data_dict = {entry.userId: entry.to_dict() for entry in entries}
+        return jsonify({'UserData': user_data_dict})
+
+    """
+
+@UserData_bp.route('/api/UserData/<int:userId>', methods=['GET'])
+@role_required(['User', 'Admin'])
+def get_one_UserData(userId):
+    entry = get_one_UserData_service(userId)
+    return jsonify(entry.to_dict())    
 
 @UserData_bp.route('/api/UserData', methods=['POST'])
-@role_required(['User', 'Admin'])
 def create_UserData():
     data = request.get_json()
     is_valid, error_msg = validate_user_data(data)

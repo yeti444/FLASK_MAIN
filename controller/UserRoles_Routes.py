@@ -6,11 +6,17 @@ from utils.utils import role_required
 UserRoles_bp = Blueprint('UserRoles', __name__)
 
 @UserRoles_bp.route('/api/UserRoles', methods=['GET'])
-@role_required(['Admin', 'User'])
+#@role_required(['Admin', 'User'])
 def get_UserRoles():
     entries = get_all_UserRoles_service()
     UserRoles_list = [entry.to_dict() for entry in entries]
-    return jsonify({'UserRoles': UserRoles_list})                
+    return jsonify({'UserRoles': UserRoles_list})   
+
+@UserRoles_bp.route('/api/UserRoles/<int:roleId>', methods=['GET'])
+#@role_required(['Admin', 'User'])
+def get_one_UserRoles(roleId):
+    entry = get_one_UserRoles_service(roleId)
+    return jsonify(entry.to_dict())               
 
 @UserRoles_bp.route('/api/UserRoles', methods=['POST'])
 @role_required(['Mistake']) #2db jogosultsági szint van csak, nem kell módosítani TODO: dinamikus jogosultságok

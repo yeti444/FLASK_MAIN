@@ -9,8 +9,8 @@ def get_one_MaintanedResources_service(maintId, resourceId):
 def create_MaintanedResources_service(maintId, resourceId):
     return create_MaintanedResources(maintId, resourceId)
 
-def update_MaintanedResources_service(maintId, resourceId):
-    return update_MaintanedResources(maintId, resourceId)
+def update_MaintanedResources_service(new_maintId, new_resourceId, maintId, resourceId):
+    return update_MaintanedResources(new_maintId, new_resourceId, maintId, resourceId)
 
 def delete_MaintanedResources_service(maintId, resourceId):
     return delete_MaintanedResources(maintId, resourceId)

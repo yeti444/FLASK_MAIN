@@ -48,11 +48,11 @@ def create_ScheduledResources(workId, resourceId):
     cur.close()
     conn.close()
 
-def update_ScheduledResources(workId, resourceId):
+def update_ScheduledResources(new_workId, new_resourceId, workId, resourceId):
     conn = db_conn()
     cur = conn.cursor()
     query = "UPDATE scheduledresources SET workId = %s, resourceId = %s WHERE workId = %s AND resourceId = %s;"
-    cur.execute(query, (workId, resourceId, workId, resourceId))
+    cur.execute(query, (new_workId, new_resourceId, workId, resourceId))
     conn.commit()
     cur.close()
     conn.close()
