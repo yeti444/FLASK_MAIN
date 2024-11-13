@@ -456,7 +456,7 @@ def test_MaintanedResources(client, jwt_token):
     client.delete(f'/api/Resources/{resourceId_temp}', headers={"Authorization": f"Bearer {jwt_token}"})
     # End Temporary DELETE
 
-def test_inserWork(client, jwt_token):
+def test_insertWork(client, jwt_token):
     response = client.post('/api/insertWork', json={
         "resourceId": 1,
         "userId": 1,

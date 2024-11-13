@@ -39,6 +39,7 @@ def get_one_UserData(userId):
     return jsonify(entry.to_dict())    
 
 @UserData_bp.route('/api/UserData', methods=['POST'])
+@role_required(['Admin'])
 def create_UserData():
     data = request.get_json()
     is_valid, error_msg = validate_user_data(data)
@@ -46,7 +47,7 @@ def create_UserData():
         return jsonify({'error': error_msg}), 400
 
     try:
-        new_entry = create_UserData_service(data['email'], data['firstName'], data['lastName'], data['password'], 2)
+        new_entry = create_UserData_service(data['email'], data['firstName'], data['lastName'], data['password'], data['roleId'])
         return jsonify({'message': 'Entry added', 'userId': new_entry}), 201
     except ValueError as ve:
         return jsonify({'error': str(ve)}), 400
