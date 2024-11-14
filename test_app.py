@@ -47,9 +47,23 @@ def test_userData(client, jwt_token):
         "email": "edit@edit.com",
         "firstName": "edit",
         "lastName": "edit",
-        "password": "Password@13",
         "roleId": 1
     }, headers={"Authorization": f"Bearer {jwt_token}"})
+    assert response.status_code == 200
+    json_data = response.get_json()
+    
+    assert "userId" in json_data
+    assert "message" in json_data
+    assert isinstance(json_data["userId"], int)
+    assert json_data["userId"] > 0
+    assert json_data["message"] == "Update successful"
+    
+    userId = json_data["userId"]
+    response = client.put(f'/api/changePassword/{userId}', json={
+        "password": "testing@17"
+    }, headers={"Authorization": f"Bearer {jwt_token}"})
+    json_data = response.get_json()
+    print(json_data)
     assert response.status_code == 200
     json_data = response.get_json()
     
@@ -300,7 +314,6 @@ def test_ScheduledResources(client, jwt_token):
     response = client.get('/api/ScheduledResources', headers={"Authorization": f"Bearer {jwt_token}"})
     assert response.status_code == 200
     
-    # Start Temporary POST
     response = client.post('/api/ScheduledWork', json={
         'userId': 1,
         'fromDate': '2030-10-20',
@@ -316,7 +329,6 @@ def test_ScheduledResources(client, jwt_token):
     }, headers={"Authorization": f"Bearer {jwt_token}"})
     json_data = response.get_json()
     resourceId_temp = json_data["resourceId"]
-    # End Temporary POST
     
     response = client.post('/api/ScheduledResources', json={
         'workId': workId_temp,
@@ -370,10 +382,8 @@ def test_ScheduledResources(client, jwt_token):
     assert json_data["resourceId"] > 0
     assert json_data["message"] == "ScheduledResources deleted successfully"
     
-    # Start Temporary DELETE
     client.delete(f'/api/ScheduledWork/{workId_temp}', headers={"Authorization": f"Bearer {jwt_token}"})
     client.delete(f'/api/Resources/{resourceId_temp}', headers={"Authorization": f"Bearer {jwt_token}"})
-    # End Temporary DELETE
 
 def test_MaintanedResources(client, jwt_token):
     response = client.get('/api/MaintanedResources', headers={"Authorization": f"Bearer {jwt_token}"})
@@ -397,7 +407,6 @@ def test_MaintanedResources(client, jwt_token):
     }, headers={"Authorization": f"Bearer {jwt_token}"})
     json_data = response.get_json()
     resourceId_temp = json_data["resourceId"]
-    # End Temporary POST
     
     response = client.post('/api/MaintanedResources', json={
         'maintId': maintId_temp,
@@ -451,10 +460,8 @@ def test_MaintanedResources(client, jwt_token):
     assert json_data["resourceId"] > 0
     assert json_data["message"] == "MaintanedResources deleted successfully"
     
-    # Start Temporary DELETE
     client.delete(f'/api/ScheduledMaintenance/{maintId_temp}', headers={"Authorization": f"Bearer {jwt_token}"})
     client.delete(f'/api/Resources/{resourceId_temp}', headers={"Authorization": f"Bearer {jwt_token}"})
-    # End Temporary DELETE
 
 def test_insertWork(client, jwt_token):
     response = client.post('/api/insertWork', json={
@@ -475,12 +482,11 @@ def test_insertWork(client, jwt_token):
     assert json_data["resourceId"] > 0
     assert json_data["message"] == "entry added"
     
-    # DELETE
     client.delete(f'/api/ScheduledResources/{json_data["workId"]}/{json_data["resourceId"]}', headers={"Authorization": f"Bearer {jwt_token}"})
     client.delete(f'/api/ScheduledWork/{json_data["workId"]}', headers={"Authorization": f"Bearer {jwt_token}"})
 
 def test_insertMaintenance(client, jwt_token):
-    # POST TEST
+
     response = client.post('/api/insertMaintenance', json={
         "resourceId": 1,
         "userId": 1,
@@ -501,7 +507,7 @@ def test_insertMaintenance(client, jwt_token):
     assert json_data["resourceId"] > 0
     assert json_data["message"] == "entry added"
     
-    # DELETE
+
     client.delete(f'/api/MaintanedResources/{json_data["maintId"]}/{json_data["resourceId"]}', headers={"Authorization": f"Bearer {jwt_token}"})
     client.delete(f'/api/ScheduledMaintenance/{json_data["maintId"]}', headers={"Authorization": f"Bearer {jwt_token}"})
 
@@ -513,11 +519,10 @@ def test_checkAvailability(client, jwt_token):
     assert isinstance(json_data["message"], bool)
 
 def test_maintenanceType(client, jwt_token):
-    # GET TEST
+    
     response = client.get('/api/MaintenanceType', headers={"Authorization": f"Bearer {jwt_token}"})
     assert response.status_code == 200
     
-    # POST TEST
     response = client.post('/api/MaintenanceType', json={
         "typeName": "testType",
     }, headers={"Authorization": f"Bearer {jwt_token}"})
@@ -530,7 +535,6 @@ def test_maintenanceType(client, jwt_token):
     assert json_data["maintenanceTypeId"] > 0
     assert json_data["message"] == "entry added"
     
-    # PUT TEST
     maintenanceTypeId = json_data["maintenanceTypeId"]
     response = client.put(f'/api/MaintenanceType/{maintenanceTypeId}', json={
         "typeName": "sigma",
@@ -544,7 +548,6 @@ def test_maintenanceType(client, jwt_token):
     assert json_data["maintenanceTypeId"] > 0
     assert json_data["message"] == "update successful"
     
-    # DELETE TEST
     maintenanceTypeId = json_data["maintenanceTypeId"]
     response = client.delete(f'/api/MaintenanceType/{maintenanceTypeId}', headers={"Authorization": f"Bearer {jwt_token}"})
     

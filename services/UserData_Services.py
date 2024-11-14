@@ -1,6 +1,6 @@
-from repository.UserData_Repository import get_all_UserData, get_one_UserData, create_UserData, update_UserData, delete_UserData, get_one_UserData_email
+from repository.UserData_Repository import get_all_UserData, get_one_UserData, create_UserData, update_UserData, delete_UserData, get_one_UserData_email, update_Password
 from repository.UserRoles_Repository import get_one_UserRoles
-from utils.utils import hashPassword, checkPassword, validate_user_data
+from utils.utils import hashPassword, checkPassword, validate_user_data, is_valid_email, is_password_strong
 from flask_jwt_extended import create_access_token
 
 
@@ -14,7 +14,7 @@ def create_UserData_service(email, firstName, lastName, password, roleId):
     validate_user_data(email, password)
     return create_UserData(email, firstName, lastName, hashPassword(password), roleId)
 
-def update_UserData_service(email, firstName, lastName, password, roleId, userId, curr_userId, curr_role):
+def update_UserData_service(email, firstName, lastName, roleId, userId, curr_userId, curr_role):
     
     if (curr_userId != userId) and (curr_role != 'Admin'):
         raise ValueError('Unauthorized')
@@ -23,8 +23,15 @@ def update_UserData_service(email, firstName, lastName, password, roleId, userId
     if (prev_roleId != roleId) and (curr_role != 'Admin'): 
         raise ValueError('Unauthorized')
     
-    validate_user_data(email, password)
-    return update_UserData(email, firstName, lastName, hashPassword(password), roleId, userId)
+    if not is_valid_email(email):
+        raise ValueError('Invalid email format')
+    return update_UserData(email, firstName, lastName, roleId, userId)
+
+def update_Password_service(password, userId):
+      
+    if not is_password_strong(password):
+        raise ValueError('Invalid password')
+    return update_Password(hashPassword(password), userId)
 
 def delete_UserData_service(userId):
     return delete_UserData(userId)

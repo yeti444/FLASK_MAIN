@@ -36,15 +36,25 @@ def create_UserData(email, firstname, lastname, password, roleId):
     conn.close()
     return new_UserData_userId
 
-def update_UserData(email, firstname, lastname, password, roleId, userId):
+def update_UserData(email, firstname, lastname, roleId, userId):
     conn = db_conn()
     cur = conn.cursor()
-    query = "UPDATE userdata SET email = %s, firstname = %s, lastname = %s, password = %s, roleid = %s WHERE userid = %s;"
-    cur.execute(query, (email, firstname, lastname, password, roleId, userId,))
+    query = "UPDATE userdata SET email = %s, firstname = %s, lastname = %s, roleid = %s WHERE userid = %s;"
+    cur.execute(query, (email, firstname, lastname, roleId, userId,))
     conn.commit()
     cur.close()
     conn.close()
 
+def update_Password(password, userId):
+    conn = db_conn()
+    cur = conn.cursor()
+    query = "UPDATE userdata SET password = %s WHERE userid = %s;"
+    cur.execute(query, (password, userId,))
+    conn.commit()
+    cur.close()
+    conn.close()
+
+    
 def delete_UserData(userid):
     conn = db_conn()
     cur = conn.cursor()
