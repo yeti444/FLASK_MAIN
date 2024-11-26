@@ -6,20 +6,20 @@ from utils.utils import role_required
 ScheduledMaintenance_bp = Blueprint('ScheduledMaintenance', __name__)
 
 @ScheduledMaintenance_bp.route('/api/ScheduledMaintenance', methods=['GET'])
-#@role_required(['Admin', 'User'])
+@role_required(['Admin', 'User'])
 def get_ScheduledMaintenance():
     entries = get_all_ScheduledMaintenance_service()
     ScheduledMaintenance_list = [entry.to_dict() for entry in entries]
     return jsonify({'ScheduledMaintenance': ScheduledMaintenance_list})          
 
 @ScheduledMaintenance_bp.route('/api/ScheduledMaintenance/<int:maintId>', methods=['GET'])
-#@role_required(['Admin', 'User'])
+@role_required(['Admin', 'User'])
 def get_one_ScheduledMaintenance(maintId):
     entry = get_one_ScheduledMaintenance_service(maintId)
     return jsonify(entry.to_dict())    
 
 @ScheduledMaintenance_bp.route('/api/ScheduledMaintenance', methods=['POST'])
-#@role_required(['Admin', 'User'])
+@role_required(['Admin', 'User'])
 def create_ScheduledMaintenance():
     data = request.get_json()
     userId= data.get('userId')
@@ -34,7 +34,7 @@ def create_ScheduledMaintenance():
     return jsonify({'message': 'entry added', 'maintId': new_entry}), 201  
 
 @ScheduledMaintenance_bp.route('/api/ScheduledMaintenance/<int:maintId>', methods=['PUT'])
-#@role_required(['Admin', 'User'])
+@role_required(['Admin', 'User'])
 def update_ScheduledMaintenance(maintId):
     data = request.get_json()
     userId= data.get('userId')
@@ -53,7 +53,7 @@ def update_ScheduledMaintenance(maintId):
         return jsonify({'error': 'ScheduledMaintenance not found'}), 404
 
 @ScheduledMaintenance_bp.route('/api/ScheduledMaintenance/<int:maintId>', methods=['DELETE'])
-#@role_required(['Admin', 'User'])
+@role_required(['Admin', 'User'])
 def delete_ScheduledMaintenance(maintId):
     existing_data = get_one_ScheduledMaintenance_service(maintId)
     if existing_data:

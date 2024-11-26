@@ -6,7 +6,7 @@ from utils.utils import role_required
 checkAvailability_bp = Blueprint('checkAvailability', __name__)
 
 @checkAvailability_bp.route('/api/checkAvailability/<int:resourceId>', methods=['GET'])
-#@role_required(['Admin', 'User'])
+@role_required(['Admin', 'User'])
 def get_MaintanedResources(resourceId):
     date = request.args.get('date')
     interval = request.args.get('interval') 
