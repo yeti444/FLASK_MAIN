@@ -389,7 +389,6 @@ def test_MaintanedResources(client, jwt_token):
     response = client.get('/api/MaintanedResources', headers={"Authorization": f"Bearer {jwt_token}"})
     assert response.status_code == 200
     
-    # Start Temporary POST
     response = client.post('/api/ScheduledMaintenance', json={
         'userId': 1,
         'fromDate': '2030-10-20',
