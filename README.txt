@@ -21,7 +21,7 @@ pip install bcrypt
 pip install pytz
 pip install pytest
 pip install pytest-xdist
-pip install flask_jwt_extended
+pip install PyJWT==2.9.0 flask_jwt_extended
 pip install flask_cors
 pip install gunicorn
 
@@ -41,7 +41,7 @@ pip install bcrypt
 pip install pytz
 pip install pytest
 pip install pytest-xdist
-pip install flask_jwt_extended
+pip install PyJWT==2.9.0 flask_jwt_extended
 pip install flask_cors
 pip install gunicorn
 
