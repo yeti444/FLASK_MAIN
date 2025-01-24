@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
+from flasgger import Swagger
 import os
 from dotenv import load_dotenv
 
@@ -18,6 +19,13 @@ from controller.CheckAvailability_Routes import checkAvailability_bp
 
 app = Flask(__name__)
 
+app.config['SWAGGER'] = {
+    "title": "Általános feladatbeosztó rendszer API",
+    "uiversion": 3,
+    "description": "Általános feladatbeosztó rendszer SWAGGER",
+    "version": "0.4"
+}
+
 load_dotenv()
 CORS(app)
 
@@ -27,6 +35,7 @@ if secret_key is None:
 app.config['JWT_SECRET_KEY'] = secret_key
 
 jwt = JWTManager(app)
+swagger = Swagger(app)  
 
 app.register_blueprint(ResourceTypes_bp)
 app.register_blueprint(UserRoles_bp)

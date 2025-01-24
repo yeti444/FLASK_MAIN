@@ -482,7 +482,6 @@ def test_insertWork(client, jwt_token):
     assert json_data["resourceId"] > 0
     assert json_data["message"] == "entry added"
     
-    client.delete(f'/api/ScheduledResources/{json_data["workId"]}/{json_data["resourceId"]}', headers={"Authorization": f"Bearer {jwt_token}"})
     client.delete(f'/api/ScheduledWork/{json_data["workId"]}', headers={"Authorization": f"Bearer {jwt_token}"})
 
 def test_insertMaintenance(client, jwt_token):
@@ -507,8 +506,6 @@ def test_insertMaintenance(client, jwt_token):
     assert json_data["resourceId"] > 0
     assert json_data["message"] == "entry added"
     
-
-    client.delete(f'/api/MaintanedResources/{json_data["maintId"]}/{json_data["resourceId"]}', headers={"Authorization": f"Bearer {jwt_token}"})
     client.delete(f'/api/ScheduledMaintenance/{json_data["maintId"]}', headers={"Authorization": f"Bearer {jwt_token}"})
 
 def test_checkAvailability(client, jwt_token):
