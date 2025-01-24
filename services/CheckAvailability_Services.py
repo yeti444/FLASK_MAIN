@@ -19,7 +19,7 @@ def check_time(resourceId, fromDate, duration):
         if single.resourceId is int(resourceId):
             if is_overlap(datetime_fromDate, timedelta_duration, single.fromdate, single.duration):
                 return {
-                "occuped": True,
+                "occupied": True,
                 "where": "maintain"
                 }
                 
@@ -28,12 +28,13 @@ def check_time(resourceId, fromDate, duration):
         if single.resourceId is int(resourceId):
             if is_overlap(datetime_fromDate, timedelta_duration, single.fromdate, single.duration):
                 return {
-                "occuped": True,
+                "occupied": True,
                 "where": "work"
                 }
     return {
-    "occuped": False,
+    "occupied": False,
     "where": "nowhere"
     }
+
 
 

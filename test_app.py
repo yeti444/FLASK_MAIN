@@ -515,8 +515,10 @@ def test_checkAvailability(client, jwt_token):
     response = client.get('/api/checkAvailability/1?date=2024-10-08T11:00:00&interval=00:30:00', headers={"Authorization": f"Bearer {jwt_token}"})
     assert response.status_code == 200
     json_data = response.get_json()
-    assert "message" in json_data
-    assert isinstance(json_data["message"], bool)
+    assert "occupied" in json_data
+    assert "where" in json_data
+    assert isinstance(json_data["occupied"], bool)
+    assert isinstance(json_data["where"], str)
 
 def test_maintenanceType(client, jwt_token):
     
